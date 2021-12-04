@@ -117,11 +117,40 @@ void docFileTracNghiem(List &l)
 			}
 		}
 	}
-	cout << "Khong the them duoc " << count << " cau hoi trong file!" << endl;
+	if (count != 0){
+		cout << "Khong the them duoc " << count << " cau hoi trong file!" << endl;
+	}
 	docFile.close();
 }
-
-
+// ham tra ve so luong node trong list
+int sizeOfList(List l){
+	int length = 0;
+	Node *p = l.lHead;
+	while (p != NULL){
+		length++;
+		p = p->pNext;
+	}
+	return length;
+}
+void createRandomList(List l, List &l2, int soLuongCauHoi){
+	int soLuongList = sizeOfList(l);
+	int max = soLuongList/soLuongCauHoi;
+	srand(time(NULL));
+	Node *p = l.lHead;
+	while (p != NULL){
+		int values = rand() % (max+max - 1 + 1) + 1;
+		for (int i = 0; i < values; i++){
+			p = p->pNext;
+			if (p == NULL && sizeOfList(l2) < soLuongCauHoi){
+				p = l.lHead;
+			}
+		}
+		insertNode(l2, p->data);
+		if (sizeOfList(l2) == soLuongCauHoi){
+			break;
+		}
+	}
+}
 void printList(List l)
 {
 	Node *p = l.lHead;
@@ -166,5 +195,8 @@ int main()
 	List l;
 	INIT(l);
 	docFileTracNghiem(l);
-	printList(l);
+	List l2;
+	INIT(l2);
+	createRandomList(l, l2, 20);
+	printList(l2);
 }
