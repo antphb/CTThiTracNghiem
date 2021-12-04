@@ -158,7 +158,7 @@ int search(List l, char cauhoi_tk[]);
 
 // ham xoa theo so thu tu 
 
-// xin chào tôi tên là thanh
+// xin chào tôi tên là thanh làm phần log in 
 
 
 int main()
