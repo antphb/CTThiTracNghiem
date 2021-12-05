@@ -216,7 +216,8 @@ void xoaTaiViTri(char str[], int index){
 }
 
 // chuan hoa chuoi, loai bo khoang cach du thua, in hoa dau dong
-char* chuanHoaChuoi(char str[]){
+char* chuanHoaChuoi(char str[])
+{
 	// xoa khoang trang o dau
 	while (strlen(str) > 1 && str[0] == ' '){
 		xoaTaiViTri(str, 0);
@@ -350,6 +351,48 @@ void DocFileTKMK(ListLogin &lg)
 	}
 	ip.close();
 }
+// tim kiem tai khoang da co trong list
+bool searchtk(ListLogin l, string tk)
+{
+	NodeLogin *p=l.head;
+	while (p)
+	{ 
+		if (p->info.taikhoan==tk)
+			return 0;
+		p=p->next;
+	}
+	return 1;
+}
+// ham dang ki tai khoan
+void Dangki_tk(ListLogin &l, login data)
+{
+	if (searchtk(l,data.taikhoan) ==0 )
+	{
+		cout<<"Tai khoang da ton tai \n";
+		return;
+	}
+	else
+	{
+		insertlogin(l,data);
+	}
+}
+
+void Luutk_vaofile(ListLogin l)
+{
+	ofstream op("tk.csv",ios::out);
+	if (!op.is_open())
+	{
+		cout<<"Loi mo file"<<endl;
+		return;
+	}
+	NodeLogin *p=l.head;
+	for (NodeLogin *p=l.head; p!=NULL;p=p->next)
+	{
+		op<<p->info.hoten<<","<<p->info.diachi<<","<<p->info.namsinh<<","<<p->info.taikhoan<<","<<p->info.matkhau<<"\n";
+	}
+	op.close();
+}
+
 
 void printListlogin(ListLogin l)
 {
@@ -486,8 +529,19 @@ int main()
 	createRandomList(l, l2, 20);
 	printList(l2);*/ 
 	
-	/*DocFileTKMK(lg);
-	printListlogin(lg);*/
+	// doc file tai khoan mat khau
+	DocFileTKMK(lg);
+	// dang ki tai khoang
+	// login a;
+	// a.hoten="Thanh";
+	// a.diachi="chu se";
+	// a.namsinh="2001";
+	// a.taikhoan="asc";
+	// a.matkhau="123";
+	// Dangki_tk(lg,a);
+	// printListlogin(lg);
+	// Luutk_vaofile(lg);
+
 	// them cau hoi vao danh sach, va them vao file
 	// themCauHoi(l);
 	// printList(l);

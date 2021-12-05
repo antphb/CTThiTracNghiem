@@ -23,4 +23,8 @@ int main()
 
     }
     ip.close();
+
+    ofstream op("tk.csv",ios::app);
+    
+    op.close();
 }
