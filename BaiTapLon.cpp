@@ -207,12 +207,14 @@ bool ghiCauTracNghiemVaoFile(TRACNGHIEM data){
 	ghiFile.close();
 	return true;
 }
+
 // xoa ki tu trong chuoi theo vi tri
 void xoaTaiViTri(char str[], int index){
 	for (int i = index; i < strlen(str); i++){
 		str[i] = str[i+1];
 	}
 }
+
 // chuan hoa chuoi, loai bo khoang cach du thua, in hoa dau dong
 char* chuanHoaChuoi(char str[]){
 	// xoa khoang trang o dau
@@ -243,6 +245,7 @@ char* chuanHoaChuoi(char str[]){
 	char *tempS = str;
 	return tempS;
 }
+
 // them cau hoi vao danh sach va ghi cau hoi do vao file
 bool themCauHoi(List &l){
 	TRACNGHIEM data;
@@ -276,28 +279,6 @@ bool themCauHoi(List &l){
 		return false;
 	}
 	return ghiCauTracNghiemVaoFile(data);
-}
-
-// doc file tai khoan mk;
-void DocFileTKMK(ListLogin &lg)
-{
-	ifstream ip("tk.csv");
-	login info;
-	if (!ip.is_open())
-	{
-		cout<<"Loi mo file"<<endl;
-		return;
-	}
-	while(ip.good())
-	{
-		getline(ip,info.hoten,',');
-		getline(ip,info.diachi,',');
-        getline(ip,info.namsinh,',');
-        getline(ip,info.taikhoan,',');
-        getline(ip,info.matkhau,'\n');
-		insertlogin(lg,info);
-	}
-	ip.close();
 }
 
 // ham tra ve so luong node trong list
@@ -348,6 +329,28 @@ void printList(List l)
 	}
 }
 
+// doc file tai khoan mk;
+void DocFileTKMK(ListLogin &lg)
+{
+	ifstream ip("tk.csv");
+	login info;
+	if (!ip.is_open())
+	{
+		cout<<"Loi mo file"<<endl;
+		return;
+	}
+	while(ip.good())
+	{
+		getline(ip,info.hoten,',');
+		getline(ip,info.diachi,',');
+        getline(ip,info.namsinh,',');
+        getline(ip,info.taikhoan,',');
+        getline(ip,info.matkhau,'\n');
+		insertlogin(lg,info);
+	}
+	ip.close();
+}
+
 void printListlogin(ListLogin l)
 {
 	NodeLogin *p = l.head;
@@ -371,17 +374,102 @@ int soluongcauhoi(int n)
 //giới hạn thời gian làm bài
 
 
-// ham tim kiem theo cau hoi nếu có thì sẽ trả về stt  
-int search(List l, char cauhoi_tk[]);
-// {
-// 	 return so thu tu  
-// }
+// Ham Tim Kiem Theo Cau Hoi Neu Co Thi Se Tra ve So Thu Tu
+int search(List l, char cauhoi_tk[])
+{
+	Node *p = l.lHead;
+	while (p != NULL)
+	{
+		// strstr dung de kiem tra chuoi chua chuoi tra ve NULL la khong chua
+		// strlwr dung de dua chuoi ve chu thuong (ngoai le: tolower chi chuyen chuoi chua 1 ky tu)
+		if (strstr(strlwr(p->data.cauHoi), strlwr(cauhoi_tk)) != NULL)
+			return p->data.stt;
+		p = p->pNext;
+	}
+	return 0;
+}
 
-// ham cap nhat theo so thu tu 
+int searchSTT(List l, int stt)
+{
+	Node *p = l.lHead;
+	while (p != NULL)
+	{
+		if (p->data.stt == stt)
+			return 1;
+		p = p->pNext;
+	}
+	return 0;
+}
 
+// Ham Cap Nhat Theo So Thu Tu
+bool capNhatTheoSTT(List &l, int stt, TRACNGHIEM data)
+{
+	Node *p = l.lHead;
+	while (p != NULL)
+	{
+		if (p->data.stt == stt)
+		{
+			// strcpy: gán giá trị của chuỗi này cho chuỗi khác thay vì dùng "="
+			strcpy(p->data.cauHoi, data.cauHoi);
+			strcpy(p->data.dapAnA, data.dapAnA);
+			strcpy(p->data.dapAnB, data.dapAnB);
+			strcpy(p->data.dapAnC, data.dapAnC);
+			strcpy(p->data.dapAnD, data.dapAnC);
+			p->data.ketQua= data.ketQua;
+			return true;
+		}
+		p = p->pNext;
+	}
+	return false;
+}
 
-// ham xoa theo so thu tu 
-
+// Ham Xoa Theo So Thu Tu
+bool xoaTheoSTT(List &list, int stt)
+{
+	Node *pdel = list.lHead;
+	if (pdel == NULL)
+		return false;
+	else
+	{
+		Node *pPre = NULL;
+		while (pdel != NULL)
+		{
+			if (pdel->data.stt == stt)
+				break;
+			pPre = pdel;
+			pdel = pdel->pNext;
+		}
+		if (pdel == NULL)
+			return false;
+		else
+		{
+			if (pdel == list.lHead)
+			{
+				list.lHead = list.lHead->pNext;
+				pdel->pNext = NULL;
+				delete pdel;
+				pdel = NULL;
+				return true;
+			}
+			else if (pdel->pNext == NULL)
+			{
+				list.lTail = pPre;
+				pPre->pNext = NULL;
+				delete pdel;
+				pdel = NULL;
+				return true;
+			}
+			else
+			{
+				pPre->pNext = pdel->pNext;
+				pdel->pNext = NULL;
+				delete pdel;
+				pdel = NULL;
+				return true;
+			}
+		}
+	}
+}
 
 
 
@@ -401,7 +489,8 @@ int main()
 	/*DocFileTKMK(lg);
 	printListlogin(lg);*/
 	// them cau hoi vao danh sach, va them vao file
-	themCauHoi(l);
-	printList(l);
-	
+	// themCauHoi(l);
+	// printList(l);
+
+	// tim kiem
 }
