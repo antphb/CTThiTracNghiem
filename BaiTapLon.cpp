@@ -27,10 +27,33 @@ struct List
 	Node *lHead;
 	Node *lTail;
 };
+
+struct login
+{
+	string hoten;
+	string diachi;
+	string namsinh;
+	string taikhoan;
+	string matkhau;
+};
+
+struct NodeLogin
+{
+	login info;
+	NodeLogin *next;
+};
+
+struct ListLogin
+{
+	NodeLogin *head;
+	NodeLogin *tail;
+};
+
 void INIT(List &l)
 {
 	l.lHead = l.lTail = NULL;
 }
+
 Node *getNode(TRACNGHIEM x)
 {
 	Node *p = new Node;
@@ -43,6 +66,7 @@ Node *getNode(TRACNGHIEM x)
 	p->pNext = NULL;
 	return p;
 }
+
 bool kiemTraTrungCauHoi(List l, TRACNGHIEM x)
 {
 	Node *p = l.lHead;
@@ -56,6 +80,7 @@ bool kiemTraTrungCauHoi(List l, TRACNGHIEM x)
 	}
 	return false;
 }
+
 bool addLast(List &l, Node *p)
 {
 	if (l.lHead == NULL)
@@ -69,6 +94,7 @@ bool addLast(List &l, Node *p)
 	}
 	return true;
 }
+
 // ham nay goi den ham kiemTraTrungCauHoi, va ham addLast // Hieu, 4/12/2021
 bool insertNode(List &l, TRACNGHIEM x)
 {
@@ -84,6 +110,49 @@ bool insertNode(List &l, TRACNGHIEM x)
 	}
 	return addLast(l, p);
 }
+
+
+void initLogin(ListLogin &l)
+{
+	l.head=l.tail= NULL;
+}
+
+NodeLogin *getnodelogin(login info)
+{
+	NodeLogin *p;
+	p=new NodeLogin;
+	if (p==NULL)
+	{
+		return NULL;
+	}
+	p->info=info;
+	p->next=NULL;
+	return p;
+}
+
+void addlastLogin(ListLogin &l, NodeLogin *new_node)
+{
+	if (l.head==NULL)
+	{
+		l.head=l.tail=new_node;
+	}
+	else
+	{
+		l.tail->next=new_node;
+		l.tail=new_node;
+	}
+}
+
+void insertlogin(ListLogin &l, login info)
+{
+	NodeLogin *new_node= getnodelogin(info);
+	if (new_node == NULL)
+	{
+		return;
+	}
+	addlastLogin(l,new_node);
+}
+
 // Doc file cau hoi trac nghiem
 void docFileTracNghiem(List &l)
 {
@@ -94,7 +163,6 @@ void docFileTracNghiem(List &l)
 		cout << "Khong the mo file de doc!";
 		return;
 	}
-
 	TRACNGHIEM data;
 	int count = 0;
 	while (!docFile.eof())
@@ -122,6 +190,29 @@ void docFileTracNghiem(List &l)
 	}
 	docFile.close();
 }
+
+// doc file tai khoan mk;
+void DocFileTKMK(ListLogin &lg)
+{
+	ifstream ip("tk.csv");
+	login info;
+	if (!ip.is_open())
+	{
+		cout<<"Loi mo file"<<endl;
+		return;
+	}
+	while(ip.good())
+	{
+		getline(ip,info.hoten,',');
+		getline(ip,info.diachi,',');
+        getline(ip,info.namsinh,',');
+        getline(ip,info.taikhoan,',');
+        getline(ip,info.matkhau,'\n');
+		insertlogin(lg,info);
+	}
+	ip.close();
+}
+
 // ham tra ve so luong node trong list
 int sizeOfList(List l){
 	int length = 0;
@@ -132,6 +223,7 @@ int sizeOfList(List l){
 	}
 	return length;
 }
+
 void createRandomList(List l, List &l2, int soLuongCauHoi){
 	int soLuongList = sizeOfList(l);
 	int max = soLuongList/soLuongCauHoi;
@@ -151,6 +243,7 @@ void createRandomList(List l, List &l2, int soLuongCauHoi){
 		}
 	}
 }
+
 void printList(List l)
 {
 	Node *p = l.lHead;
@@ -165,6 +258,21 @@ void printList(List l)
 		cout <<"Dap an: "<<p->data.ketQua << endl;
 		cout << endl;
 		p = p->pNext;
+	}
+}
+
+void printListlogin(ListLogin l)
+{
+	NodeLogin *p = l.head;
+	while (p != NULL)
+	{
+		cout << p->info.hoten<<endl;
+		cout << p->info.diachi << endl;
+		cout << p->info.namsinh << endl;
+		cout << p->info.taikhoan << endl;
+		cout << p->info.matkhau << endl;
+		cout << endl;
+		p =p->next;
 	}
 }
 
@@ -187,16 +295,21 @@ int search(List l, char cauhoi_tk[]);
 
 // ham xoa theo so thu tu 
 
-// xin chào tôi tên là thanh làm phần log in 
+
 
 
 int main()
 {
 	List l;
 	INIT(l);
+	ListLogin lg;
+	initLogin(lg);
 	docFileTracNghiem(l);
 	List l2;
 	INIT(l2);
 	createRandomList(l, l2, 20);
 	printList(l2);
+
+	DocFileTKMK(lg);
+	printListlogin(lg);
 }
