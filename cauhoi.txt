@@ -698,3 +698,10 @@ B) Hieu Ung Trigger
 C) Hieu Ung Chuyen Trang
 D) Tat Ca Deu Dung
 c
+101
+Trong Mang May Tinh, Thuat Ngu Share Co Y Nghia La Gi?
+A) Chia Se Tai Nguyen
+B) Nhan Hieu Cua Mot Thiet Bi Ket Noi Mang
+C) Thuc Hien Lenh In Trong Mang Cuc Bo
+D) Mot Phan Mem Ho Tro Su Dung Mang Cuc Bo
+a

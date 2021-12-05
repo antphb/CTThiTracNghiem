@@ -190,6 +190,93 @@ void docFileTracNghiem(List &l)
 	}
 	docFile.close();
 }
+// ghi 1 cau hoi trac nghiem trac nghiem moi bo sung vao file
+bool ghiCauTracNghiemVaoFile(TRACNGHIEM data){
+	ofstream ghiFile("cauhoi.txt", ios::app);
+	if (ghiFile.bad()){
+		cout<<"Khong the mo file de ghi!";
+		return false;
+	}
+	ghiFile<<data.stt<<endl;
+	ghiFile<<data.cauHoi<<endl;
+	ghiFile<<data.dapAnA<<endl;
+	ghiFile<<data.dapAnB<<endl;
+	ghiFile<<data.dapAnC<<endl;
+	ghiFile<<data.dapAnD<<endl;
+	ghiFile<<data.ketQua<<endl;
+	ghiFile.close();
+	return true;
+}
+// xoa ki tu trong chuoi theo vi tri
+void xoaTaiViTri(char str[], int index){
+	for (int i = index; i < strlen(str); i++){
+		str[i] = str[i+1];
+	}
+}
+// chuan hoa chuoi, loai bo khoang cach du thua, in hoa dau dong
+char* chuanHoaChuoi(char str[]){
+	// xoa khoang trang o dau
+	while (strlen(str) > 1 && str[0] == ' '){
+		xoaTaiViTri(str, 0);
+	}
+	// xoa khoang trang ben trong cau
+	for (int i = 0; i < strlen(str)-1; i++){
+		if (str[i] == ' ' && str[i+1] == ' '){
+			xoaTaiViTri(str, i);
+			i--;
+		}
+	}
+	// xoa o cuoi cau
+	while (str[strlen(str)-1] == ' '){
+		str[strlen(str)-1] = '\0';
+	}
+	// in hoa ki tu dau dong
+	if (str[0] >= 'a' && str[0] <= 'z'){
+		str[0] = str[0] - 32;
+	}
+	// in hoa ki tu sau dau cach
+	for (int i = 0; i < strlen(str)-1; i++){
+		if (str[i] == ' ' && str[i+1] >= 'a' && str[i+1] <= 'z'){
+			str[i+1] = str[i+1] - 32;
+		}
+	}
+	char *tempS = str;
+	return tempS;
+}
+// them cau hoi vao danh sach va ghi cau hoi do vao file
+bool themCauHoi(List &l){
+	TRACNGHIEM data;
+	char s1[253];
+	cout<<"Nhap vao cau hoi day du: ";
+	gets(data.cauHoi);
+	strcpy(data.cauHoi, chuanHoaChuoi(data.cauHoi));
+	cout<<"Nhap vao dap an A: ";
+	gets(s1);
+	sprintf(data.dapAnA, "%s %s","A)", s1);
+	strcpy(data.dapAnA, chuanHoaChuoi(data.dapAnA));
+	cout<<"Nhap vao dap an B: ";
+	gets(s1);
+	sprintf(data.dapAnB, "%s %s", "B)", s1);
+	strcpy(data.dapAnB, chuanHoaChuoi(data.dapAnB));
+	cout<<"Nhap vao dap an C: ";
+	gets(s1);
+	sprintf(data.dapAnC, "%s %s", "C)", s1);
+	strcpy(data.dapAnC, chuanHoaChuoi(data.dapAnC));
+	cout<<"Nhap vao dap an D: ";
+	gets(s1);
+	sprintf(data.dapAnD, "%s %s", "D)", s1);
+	strcpy(data.dapAnD, chuanHoaChuoi(data.dapAnD));
+	do{
+		cout<<"Nhap vao dap an dung(a, b, c, d): ";
+		cin>>data.ketQua;
+	} while (data.ketQua != 'a' && data.ketQua != 'b' && data.ketQua != 'c' && data.ketQua != 'd');
+	cin.ignore();
+	data.stt = l.lTail->data.stt+1;
+	if (insertNode(l, data) == false){
+		return false;
+	}
+	return ghiCauTracNghiemVaoFile(data);
+}
 
 // doc file tai khoan mk;
 void DocFileTKMK(ListLogin &lg)
@@ -305,11 +392,16 @@ int main()
 	ListLogin lg;
 	initLogin(lg);
 	docFileTracNghiem(l);
-	List l2;
+	
+	/* List l2;
 	INIT(l2);
 	createRandomList(l, l2, 20);
-	printList(l2);
-
-	DocFileTKMK(lg);
-	printListlogin(lg);
+	printList(l2);*/ 
+	
+	/*DocFileTKMK(lg);
+	printListlogin(lg);*/
+	// them cau hoi vao danh sach, va them vao file
+	themCauHoi(l);
+	printList(l);
+	
 }
