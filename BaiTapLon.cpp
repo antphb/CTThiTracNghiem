@@ -340,6 +340,8 @@ void DocFileTKMK(ListLogin &lg)
 		cout<<"Loi mo file"<<endl;
 		return;
 	}
+	string line;
+	getline(ip,line);
 	while(ip.good())
 	{
 		getline(ip,info.hoten,',');
@@ -385,6 +387,7 @@ void Luutk_vaofile(ListLogin l)
 		cout<<"Loi mo file"<<endl;
 		return;
 	}
+	op<<"Ho va Ten,Que Quan,Nam Sinh,Tai Khoan,Mat Khau\n";
 	for (NodeLogin *p=l.head; p!=NULL;p=p->next)
 	{
 		op<<p->info.hoten<<","<<p->info.diachi<<","<<p->info.namsinh<<","<<p->info.taikhoan<<","<<p->info.matkhau;
@@ -537,7 +540,7 @@ int main()
 	a.hoten="Thanh";
 	a.diachi="chu se";
 	a.namsinh="2001";
-	a.taikhoan="assscs";
+	a.taikhoan="assscsacsanvkxz";
 	a.matkhau="123";
 	Dangki_tk(lg,a);
 	printListlogin(lg);
