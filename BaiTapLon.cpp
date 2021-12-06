@@ -385,10 +385,11 @@ void Luutk_vaofile(ListLogin l)
 		cout<<"Loi mo file"<<endl;
 		return;
 	}
-	NodeLogin *p=l.head;
 	for (NodeLogin *p=l.head; p!=NULL;p=p->next)
 	{
-		op<<p->info.hoten<<","<<p->info.diachi<<","<<p->info.namsinh<<","<<p->info.taikhoan<<","<<p->info.matkhau<<"\n";
+		op<<p->info.hoten<<","<<p->info.diachi<<","<<p->info.namsinh<<","<<p->info.taikhoan<<","<<p->info.matkhau;
+		if (p != l.tail)
+			op<<endl;
 	}
 	op.close();
 }
@@ -532,15 +533,15 @@ int main()
 	// doc file tai khoan mat khau
 	DocFileTKMK(lg);
 	// dang ki tai khoang
-	// login a;
-	// a.hoten="Thanh";
-	// a.diachi="chu se";
-	// a.namsinh="2001";
-	// a.taikhoan="asc";
-	// a.matkhau="123";
-	// Dangki_tk(lg,a);
-	// printListlogin(lg);
-	// Luutk_vaofile(lg);
+	login a;
+	a.hoten="Thanh";
+	a.diachi="chu se";
+	a.namsinh="2001";
+	a.taikhoan="assscs";
+	a.matkhau="123";
+	Dangki_tk(lg,a);
+	printListlogin(lg);
+	Luutk_vaofile(lg);
 
 	// them cau hoi vao danh sach, va them vao file
 	// themCauHoi(l);
