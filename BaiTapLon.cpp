@@ -298,7 +298,8 @@ void createRandomList(List l, List &l2, int soLuongCauHoi){
 	int max = soLuongList/soLuongCauHoi;
 	srand(time(NULL));
 	Node *p = l.lHead;
-	while (p != NULL){
+	while (p != NULL)
+	{
 		int values = rand() % (max+max - 1 + 1) + 1;
 		for (int i = 0; i < values; i++){
 			p = p->pNext;
@@ -311,6 +312,29 @@ void createRandomList(List l, List &l2, int soLuongCauHoi){
 			break;
 		}
 	}
+}
+
+void ThiTracNghiem(List l2)
+{
+	double diemmax=10;
+	int socauhoi;
+	socauhoi= sizeOfList(l2);
+	double diem=diemmax/double(socauhoi),sum =0;
+	char dapan;
+	Node *p=l2.lHead;
+	while (p)
+	{
+		cout<<p->data.stt<<": "<<p->data.cauHoi<<endl;
+		cout<<p->data.dapAnA<<"\t"<<p->data.dapAnB<<endl;
+		cout<<p->data.dapAnC<<"\t"<<p->data.dapAnD<<endl;
+		cout<<"Dap an: ";
+		cin>>dapan;
+		if (tolower(dapan) == p->data.ketQua)
+			sum += diem;
+		cout<<endl;
+		p=p->pNext;
+	}
+	cout<<"Diem cua ban la: "<<sum<<"/10"<<endl<<endl;
 }
 
 void printList(List l)
@@ -580,6 +604,18 @@ bool xoaTheoSTT(List &list, int stt)
 	}
 }
 
+void SapXepSTT(List &l2)
+{
+	int stt=1;
+	Node *p=l2.lHead;
+	while (p)
+	{
+		p->data.stt=stt;
+		stt++;
+		p=p->pNext;
+	}
+}
+
 // int main()
 // {
 // 	List l;
@@ -623,20 +659,22 @@ void menu()
 {
 	cout<<"1: Dang nhap thi trac nghiem (thi sinh) "<<endl;
 	cout<<"2: Dang ki thi trac nghiem (thi sinh) "<<endl;
-	cout<<"3: Update (Thay co)"<<endl;
+	cout<<"3: Admin (Thay/co)"<<endl;
 	cout<<"4: Thoat khoi chuong trinh"<<endl;
-	
 }
 
 int main()
 {
-	List l;
+	List l,l2;
 	INIT(l);
+	INIT(l2);
+	docFileTracNghiem(l);
 	ListLogin lg;
 	initLogin(lg);
 	DocFileTKMK(lg);
 	login a;
 	string tk,mk;
+	int cauhoi;
 	cout<<"CHUONG TRINH THI TRAC NGHIEM!!!"<<endl;
 	while (true)
 	{
@@ -654,7 +692,13 @@ int main()
 				cin>>mk;
 				if (Dangnhap_tk(lg,tk,mk)==1)
 				{
-					
+					cout<<"Ban muon thi bao nhieu cau hoi: ";
+					cin>>cauhoi;
+					int sumcauhoi;
+					createRandomList(l, l2, cauhoi);
+					SapXepSTT(l2);
+					ThiTracNghiem(l2);
+					// printList(l2);
 				}
 				break;
 			}
