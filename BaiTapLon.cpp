@@ -353,30 +353,29 @@ void DocFileTKMK(ListLogin &lg)
 	}
 	ip.close();
 }
+
 // tim kiem tai khoang da co trong list
-bool searchtk(ListLogin l, string tk)
+NodeLogin *searchtk(ListLogin l, string tk)
 {
 	NodeLogin *p=l.head;
 	while (p)
 	{ 
 		if (p->info.taikhoan==tk)
-			return 0;
+			return p;
 		p=p->next;
 	}
-	return 1;
+	return NULL;
 }
-// ham dang ki tai khoan
-void Dangki_tk(ListLogin &l, login data)
+// ham kiem tra tai khoang da duoc dang ki chua, neu chua thi them vao list
+int check_dangki_tk(ListLogin &l, login data)
 {
-	if (searchtk(l,data.taikhoan) ==0 )
+	NodeLogin *p = searchtk(l,data.taikhoan);
+	if (p!= NULL)
 	{
-		cout<<"Tai khoang da ton tai \n";
-		return;
+		return 0;
 	}
-	else
-	{
-		insertlogin(l,data);
-	}
+	insertlogin(l,data);
+	return 1;
 }
 
 void Luutk_vaofile(ListLogin l)
@@ -395,6 +394,46 @@ void Luutk_vaofile(ListLogin l)
 			op<<endl;
 	}
 	op.close();
+}
+
+void Dangki_taikhoan(ListLogin &lg,login info)
+{
+	if (check_dangki_tk(lg,info)==1)
+	{
+		cout<<"Tai khoan dang ki thanh cong\n";
+		Luutk_vaofile(lg);
+	}
+	else
+		cout<<"Tai khoan da ton tai \n";
+}
+
+int Dangnhap_tk(ListLogin lg, string tk, string mk)
+{
+	NodeLogin *p=searchtk(lg,tk);
+	if (p!=NULL)
+	{
+		while (true)
+		{	
+			if (p->info.matkhau == mk)
+			{
+				cout<<"Dang nhap thanh cong!"<<endl;
+				return 1;
+			}
+			else
+			{
+				cout<<"Tai khoan hoac mat khau sai!"<<endl;
+				cout<<"Tai khoan: ";
+				cin>>tk;
+				cout<<"Mat khau: ";
+				cin>>mk;
+			} 
+		}
+	}
+	else
+	{
+		cout<<"Tai khoan chua dang ki!"<<endl;
+		return 0;
+	}
 }
 
 
@@ -422,18 +461,30 @@ int soluongcauhoi(int n)
 
 
 // Ham Tim Kiem Theo Cau Hoi Neu Co Thi Se Tra ve So Thu Tu
-int search(List l, char cauhoi_tk[])
+// int search(List l, char cauhoi_tk[])
+// {
+// 	Node *p = l.lHead;
+// 	while (p != NULL)
+// 	{
+// 		// strstr dung de kiem tra chuoi chua chuoi tra ve NULL la khong chua
+// 		// strlwr dung de dua chuoi ve chu thuong (ngoai le: tolower chi chuyen chuoi chua 1 ky tu)
+// 		if (strstr(strlwr(p->data.cauHoi), strlwr(cauhoi_tk)) != NULL)
+// 			return p->data.stt;
+// 		p = p->pNext;
+// 	}
+// 	return 0;
+// }
+
+void search (List l, char cauhoi_tk[])
 {
 	Node *p = l.lHead;
 	while (p != NULL)
 	{
 		// strstr dung de kiem tra chuoi chua chuoi tra ve NULL la khong chua
-		// strlwr dung de dua chuoi ve chu thuong (ngoai le: tolower chi chuyen chuoi chua 1 ky tu)
-		if (strstr(strlwr(p->data.cauHoi), strlwr(cauhoi_tk)) != NULL)
-			return p->data.stt;
+		if (strstr(p->data.cauHoi, chuanHoaChuoi(cauhoi_tk)) != NULL)
+			cout<<p->data.stt<<": "<<p->data.cauHoi<<endl;
 		p = p->pNext;
 	}
-	return 0;
 }
 
 int searchSTT(List l, int stt)
@@ -535,20 +586,27 @@ int main()
 	
 	// doc file tai khoan mat khau
 	DocFileTKMK(lg);
+
 	// dang ki tai khoang
-	login a;
-	a.hoten="Thanh";
-	a.diachi="chu se";
-	a.namsinh="2001";
-	a.taikhoan="assscsacsanvkxz";
-	a.matkhau="123";
-	Dangki_tk(lg,a);
-	printListlogin(lg);
-	Luutk_vaofile(lg);
+	// login a;
+	// a.hoten="Thanh";
+	// a.diachi="chu se";
+	// a.namsinh="2001";
+	// a.taikhoan="abcadcsd";
+	// a.matkhau="123";
+	// Dangki_taikhoan(lg,a);
+
+	// char a[]="su dung nut nao";
+	// search(l,a);
+
+	// Dang nhap tai khoan
+	string tk,mk;
+	tk="antphb";
+	mk="1236";
+	Dangnhap_tk(lg,tk,mk);
 
 	// them cau hoi vao danh sach, va them vao file
 	// themCauHoi(l);
 	// printList(l);
-
 	// tim kiem
 }
