@@ -83,7 +83,11 @@ C) Tools - Split Cells
 D) Table - Cells
 b
 13
+<<<<<<< HEAD
 Gia Tri Cua =LEN(TRUNG TAM TIN HOC)Trong Excel La:
+=======
+Gia Tri Cua =LEN( TRUNG TAM TIN HOC )Trong Excel La:
+>>>>>>> d16fda9fbcbbaad74907c0de67154b7aef615f0d
 A) 15
 B) 16
 C) 17
