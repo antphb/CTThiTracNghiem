@@ -409,12 +409,14 @@ void Dangki_taikhoan(ListLogin &lg,login info)
 
 int Dangnhap_tk(ListLogin lg, string tk, string mk)
 {
+	DocFileTKMK(lg);
 	NodeLogin *p=searchtk(lg,tk);
+	string luachon;
 	if (p!=NULL)
 	{
 		while (true)
 		{	
-			if (p->info.matkhau == mk)
+			if (p->info.matkhau == mk && p->info.taikhoan==tk)
 			{
 				cout<<"Dang nhap thanh cong!"<<endl;
 				return 1;
@@ -422,10 +424,19 @@ int Dangnhap_tk(ListLogin lg, string tk, string mk)
 			else
 			{
 				cout<<"Tai khoan hoac mat khau sai!"<<endl;
-				cout<<"Tai khoan: ";
-				cin>>tk;
-				cout<<"Mat khau: ";
-				cin>>mk;
+				cout<<"Nhan phim bat ki de dang nhap lai (Nhan phim N khong dang nhap lai!!) ";
+				cin>>luachon;
+				if (luachon == "n" || luachon == "N")
+				{
+					return 0;
+				}
+				else
+				{
+					cout<<"Tai khoan: ";
+					cin>>tk;
+					cout<<"Mat khau: ";
+					cin>>mk;
+				}
 			} 
 		}
 	}
@@ -569,7 +580,53 @@ bool xoaTheoSTT(List &list, int stt)
 	}
 }
 
+// int main()
+// {
+// 	List l;
+// 	INIT(l);
+// 	ListLogin lg;
+// 	initLogin(lg);
+// 	docFileTracNghiem(l);
+	
+// 	/* List l2;
+// 	INIT(l2);
+// 	createRandomList(l, l2, 20);
+// 	printList(l2);*/ 
+	
+// 	// doc file tai khoan mat khau
+// 	DocFileTKMK(lg);
 
+// 	// dang ki tai khoang
+// 	// login a;
+// 	// a.hoten="Thanh";
+// 	// a.diachi="chu se";
+// 	// a.namsinh="2001";
+// 	// a.taikhoan="abcadcsd";
+// 	// a.matkhau="123";
+// 	// Dangki_taikhoan(lg,a);
+
+// 	// char a[]="su dung nut nao";
+// 	// search(l,a);
+
+// 	// Dang nhap tai khoan
+// 	string tk,mk;
+// 	tk="antphb";
+// 	mk="12356";
+// 	Dangnhap_tk(lg,tk,mk);
+
+// 	// them cau hoi vao danh sach, va them vao file
+// 	// themCauHoi(l);
+// 	// printList(l);
+// 	// tim kiem
+// }
+void menu()
+{
+	cout<<"1: Dang nhap thi trac nghiem (thi sinh) "<<endl;
+	cout<<"2: Dang ki thi trac nghiem (thi sinh) "<<endl;
+	cout<<"3: Update (Thay co)"<<endl;
+	cout<<"4: Thoat khoi chuong trinh"<<endl;
+	
+}
 
 int main()
 {
@@ -577,36 +634,48 @@ int main()
 	INIT(l);
 	ListLogin lg;
 	initLogin(lg);
-	docFileTracNghiem(l);
-	
-	/* List l2;
-	INIT(l2);
-	createRandomList(l, l2, 20);
-	printList(l2);*/ 
-	
-	// doc file tai khoan mat khau
 	DocFileTKMK(lg);
-
-	// dang ki tai khoang
-	// login a;
-	// a.hoten="Thanh";
-	// a.diachi="chu se";
-	// a.namsinh="2001";
-	// a.taikhoan="abcadcsd";
-	// a.matkhau="123";
-	// Dangki_taikhoan(lg,a);
-
-	// char a[]="su dung nut nao";
-	// search(l,a);
-
-	// Dang nhap tai khoan
+	login a;
 	string tk,mk;
-	tk="antphb";
-	mk="1236";
-	Dangnhap_tk(lg,tk,mk);
-
-	// them cau hoi vao danh sach, va them vao file
-	// themCauHoi(l);
-	// printList(l);
-	// tim kiem
+	cout<<"CHUONG TRINH THI TRAC NGHIEM!!!"<<endl;
+	while (true)
+	{
+		menu();
+		int luachon;
+		cout<<"Lua chon cua ban: ";
+		cin>>luachon;
+		switch (luachon)
+		{
+			case 1:
+			{
+				cout<<"Tai khoan: ";
+				cin>>tk;
+				cout<<"Mat khau: ";
+				cin>>mk;
+				if (Dangnhap_tk(lg,tk,mk)==1)
+				{
+					
+				}
+				break;
+			}
+			case 2:
+			{
+				cin.ignore();
+				cout<<"Ho ten: ";
+				getline(cin,a.hoten);
+				cout<<"Dia chi: ";
+				getline(cin,a.diachi);
+				cout<<"Nam sinh: ";
+				getline(cin,a.namsinh);
+				cout<<"Tai khoan: ";
+				getline(cin,a.taikhoan);
+				cout<<"Mat khau: ";
+				getline(cin,a.matkhau);
+				Dangki_taikhoan(lg,a);
+				break;
+			}
+			case 3:
+				exit(0);
+		}
+	}
 }
