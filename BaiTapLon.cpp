@@ -634,45 +634,6 @@ void SapXepSTT(List &l2)
 	}
 }
 
-// int main()
-// {
-// 	List l;
-// 	INIT(l);
-// 	ListLogin lg;
-// 	initLogin(lg);
-// 	docFileTracNghiem(l);
-	
-// 	/* List l2;
-// 	INIT(l2);
-// 	createRandomList(l, l2, 20);
-// 	printList(l2);*/ 
-	
-// 	// doc file tai khoan mat khau
-// 	DocFileTKMK(lg);
-
-// 	// dang ki tai khoang
-// 	// login a;
-// 	// a.hoten="Thanh";
-// 	// a.diachi="chu se";
-// 	// a.namsinh="2001";
-// 	// a.taikhoan="abcadcsd";
-// 	// a.matkhau="123";
-// 	// Dangki_taikhoan(lg,a);
-
-// 	// char a[]="su dung nut nao";
-// 	// search(l,a);
-
-// 	// Dang nhap tai khoan
-// 	string tk,mk;
-// 	tk="antphb";
-// 	mk="12356";
-// 	Dangnhap_tk(lg,tk,mk);
-
-// 	// them cau hoi vao danh sach, va them vao file
-// 	// themCauHoi(l);
-// 	// printList(l);
-// 	// tim kiem
-// }
 void menu()
 {
 	cout<<"\tCHUONG TRINH THI TRAC NGHIEM\t\t"<<endl;
@@ -692,7 +653,6 @@ void menu_thitracnghiem()
 	cout<<"|   3: Thoat	                  |"<<endl;
 	cout<<"|------------------------------|"<<endl;
 }
-
 
 int main()
 {
@@ -760,3 +720,70 @@ int main()
 		}
 	}
 }
+
+//int main()
+//{
+//	List l;
+//	INIT(l);
+//	docFileTracNghiem(l);
+//	printList(l);
+//search
+	// cout<<"Nhap Tu Khoa Muon Tim: "; char a[255]; cin.getline(a,255);
+	// search(l,a);
+	//cap nhat
+//	cout<<"Nhap tu khoa: "; char b[255]; cin.getline(b,255);
+//	search(l,b);
+//	cout<<"Nhap STT: "; int stt; cin>>stt;
+//	cin.ignore();
+//		
+//	if( stt>sizeOfList(l) || stt<1)
+//		cout<<"Khong tim thay";
+//	else
+//	{	
+//		Node *p;
+//		cout << "\nNhap Cau Hoi Moi: ";
+//		cin.getline(p->data.cauHoi, 255);
+//		cout << "Nhap Dap An A Moi: ";
+//		cin.getline(p->data.dapAnA, 255);
+//		cout << "Nhap Dap An B Moi: ";
+//		cin.getline(p->data.dapAnB, 255);
+//		cout << "Nhap Dap An C Moi: ";
+//		cin.getline(p->data.dapAnC, 255);
+//		cout << "Nhap Dap An D Moi: ";
+//		cin.getline(p->data.dapAnD, 255);
+//		cout << "Nhap Ket Qua Moi: ";
+//		cin >> p->data.ketQua;
+//		if (capNhatTheoSTT(l, stt, p->data) == true)
+//		{
+//			cout << "Cap Nhat Thanh Cong";
+//			while(p){
+//				if(p->data.stt==1)
+//					ghiMoiFile(p->data);	
+//				else
+//					ghiCauTracNghiemVaoFile(p->data);
+//				p = p->pNext;
+//			}
+//		}
+//		else
+//			cout << "Cap Nhat That Bai";
+//	}
+//	printList(l);
+	//Xoa
+//	cout<<"Nhap STT Muon Xoa: "; int stt;cin>>stt;
+//	if(xoaTheoSTT(l,stt)==true)
+//	{
+//		cout<<"Xoa Thanh Cong";
+//		SapXepSTT(l);
+//		Node *p = l.lHead;
+//		while(p!=NULL)
+//		{
+//			if(p->data.stt==1)
+//				ghiMoiFile(p->data);
+//			else
+//				ghiCauTracNghiemVaoFile(p->data);
+//			p=p->pNext;
+//		}
+//	}
+//	else
+//		cout<<"Xoa That Bai";
+//	printList(l);
