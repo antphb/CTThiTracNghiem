@@ -662,6 +662,7 @@ void menu_admin()
 	cout<<"|   3: Them cau hoi  					        |"<<endl;
 	cout<<"|   4: Xoa cau hoi	                            |"<<endl;
 	cout<<"|   5: Cap nhat so luong cau hoi thi trac nghiem |"<<endl;
+	cout<<"|   6: Thoat va luu lai						    |"<<endl;
 	cout<<"|------------------------------------------------|"<<endl;
 }
 
