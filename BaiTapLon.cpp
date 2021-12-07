@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <fstream>
+#include <unistd.h>
 using namespace std;
 
 typedef struct TRACNGHIEM
@@ -314,7 +315,18 @@ void createRandomList(List l, List &l2, int soLuongCauHoi){
 	}
 }
 
-void ThiTracNghiem(List l2)
+bool kiemtradapanchuan(char x)
+{
+	char str[]="abcdABCD";
+	for (int i=0; i<strlen(str); i++)
+	{
+		if (x==str[i])
+			return true;
+	}
+	return false;
+}
+
+int ThiTracNghiem(List l2)
 {
 	double diemmax=10;
 	int socauhoi;
@@ -329,13 +341,18 @@ void ThiTracNghiem(List l2)
 		cout<<left<<setw(30)<<p->data.dapAnC<<left<<setw(30)<<p->data.dapAnD<<endl;
 		cout<<"Dap an: ";
 		cin>>dapan;
+		while (kiemtradapanchuan(dapan) == false)
+		{
+			cout<<"Nhap lai dap an: ";
+			cin>>dapan;
+		}
 		dapan=tolower(dapan);
 		if (dapan == p->data.ketQua)
 			sum += diem;
 		cout<<endl;
 		p=p->pNext;
 	}
-	cout<<"Diem cua ban la: "<<sum<<"/10"<<endl<<endl;
+	return sum;
 }
 
 void printList(List l)
@@ -658,11 +675,24 @@ void SapXepSTT(List &l2)
 // }
 void menu()
 {
-	cout<<"1: Dang nhap thi trac nghiem (thi sinh) "<<endl;
-	cout<<"2: Dang ki thi trac nghiem (thi sinh) "<<endl;
-	cout<<"3: Admin (Thay/co)"<<endl;
-	cout<<"4: Thoat khoi chuong trinh"<<endl;
+	cout<<"\tCHUONG TRINH THI TRAC NGHIEM\t\t"<<endl;
+	cout<<"|----------------------------------------------|"<<endl;
+	cout<<"|   1: Dang nhap thi trac nghiem (thi sinh)    |"<<endl;
+	cout<<"|   2: Dang ki thi trac nghiem (thi sinh)      |"<<endl;
+	cout<<"|   3: Admin (Thay/co)                         |"<<endl;
+	cout<<"|   4: Thoat khoi chuong trinh                 |"<<endl;
+	cout<<"|----------------------------------------------|"<<endl;
 }
+
+void menu_thitracnghiem()
+{
+	cout<<"|------------------------------|"<<endl;
+	cout<<"|   1: Xem diem thi            |"<<endl;
+	cout<<"|   2: Xem dap an trac nghiem  |"<<endl;
+	cout<<"|   3: Thoat	                  |"<<endl;
+	cout<<"|------------------------------|"<<endl;
+}
+
 
 int main()
 {
@@ -673,33 +703,37 @@ int main()
 	ListLogin lg;
 	initLogin(lg);
 	DocFileTKMK(lg);
-	login a;
+	login info;
 	string tk,mk;
 	int cauhoi;
-	cout<<"CHUONG TRINH THI TRAC NGHIEM!!!"<<endl;
+	cauhoi=10;
 	while (true)
 	{
 		menu();
 		int luachon;
 		cout<<"Lua chon cua ban: ";
 		cin>>luachon;
+		sleep(1);
+		system("cls");
 		switch (luachon)
 		{
 			case 1:
 			{
+				cout<<"\tDANG NHAP"<<endl;
 				cout<<"Tai khoan: ";
 				cin>>tk;
 				cout<<"Mat khau: ";
 				cin>>mk;
 				if (Dangnhap_tk(lg,tk,mk)==1)
 				{
-					cout<<"Ban muon thi bao nhieu cau hoi: ";
-					cin>>cauhoi;
-					int sumcauhoi;
+					sleep(1);
+					system("cls");
+					cout<<"Bat dau lam bai thi! "<<endl;
 					createRandomList(l, l2, cauhoi);
 					SapXepSTT(l2);
 					ThiTracNghiem(l2);
-					// printList(l2);
+					menu_thitracnghiem();
+					// cout<<"Diem cua ban la: "<<sum<<"/10"<<endl<<endl;
 				}
 				break;
 			}
@@ -707,19 +741,21 @@ int main()
 			{
 				cin.ignore();
 				cout<<"Ho ten: ";
-				getline(cin,a.hoten);
+				getline(cin,info.hoten);
 				cout<<"Dia chi: ";
-				getline(cin,a.diachi);
+				getline(cin,info.diachi);
 				cout<<"Nam sinh: ";
-				getline(cin,a.namsinh);
+				getline(cin,info.namsinh);
 				cout<<"Tai khoan: ";
-				getline(cin,a.taikhoan);
+				getline(cin,info.taikhoan);
 				cout<<"Mat khau: ";
-				getline(cin,a.matkhau);
-				Dangki_taikhoan(lg,a);
+				getline(cin,info.matkhau);
+				Dangki_taikhoan(lg,info);
 				break;
 			}
 			case 3:
+				exit(0);
+			case 4:
 				exit(0);
 		}
 	}
