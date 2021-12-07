@@ -1,0 +1,26 @@
+//có thể chọn số lượng câu hỏi làm, giới hạn thời gian làm bài
+void inputQuestion()
+{
+	int n;
+	cout<<"Nháº­p sá»‘ lÆ°á»£ng cÃ¢u há»i: ";
+	cin>>n;
+	ifstream ifs("cauhoi.txt");
+	if (ifs)
+	{
+		int stt;
+		TRACNGHIEM temp;
+		for (int i = 0; i < n; i++) {
+			ifs>>stt;
+			ifs.ignore();
+			ifs.getline(temp.cauHoi, 256);
+			ifs.getline(temp.dapAnA, 256);
+			ifs.getline(temp.dapAnB, 256);
+			ifs.getline(temp.dapAnC, 256);
+			ifs.getline(temp.dapAnD, 256);
+			ifs>>temp.ketQua;
+			cout<<temp.cauHoi<<endl;
+		}
+	}
+	else
+		cout<<"Khong tim thay danh sach cau hoi";
+}
