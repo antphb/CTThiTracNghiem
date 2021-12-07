@@ -775,6 +775,26 @@ void dangnhapkiemtraTN(List l, List l2, ListLogin lg, int cauhoi)
 	}
 }
 
+// input password, hien thi mat khau vua nhap an voi *******
+string inputPassword(int maxLength){
+	string password;
+	for (char c; (c = getch()); ){
+		if (c == '\n' || c == '\r') { 
+            std::cout << "\n";
+            break;
+        } else if (c == '\b') {
+            std::cout << "\b \b";
+            if (!password.empty()) password.erase(password.size()-1);
+        } else if (c == -32) { 
+            _getch(); 
+        } else if (isprint(c) && password.size() < maxLength) { 
+            std::cout << '*';
+            password += c;
+        }
+	}
+	return password;
+}
+
 int main()
 {
 	List l,l2;
@@ -810,7 +830,15 @@ int main()
 				break;
 			}
 			case 3:
-				exit(0);
+			{
+				cout<<"Ban chon dang nhap voi quyen quan tri vien!"<<endl;
+				cin.ignore();
+				string account;
+				cout<<"Tai Khoan: ";
+				getline(cin, account);
+				cout<<"Mat Khau: ";
+				string password = inputPassword(256); 
+			}
 			case 4:
 				exit(0);
 		}
