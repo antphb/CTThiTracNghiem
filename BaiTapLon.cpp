@@ -296,7 +296,8 @@ int sizeOfList(List l){
 	return length;
 }
 
-void createRandomList(List l, List &l2, int soLuongCauHoi){
+void createRandomList(List l, List &l2, int soLuongCauHoi)
+{
 	int soLuongList = sizeOfList(l);
 	int max = soLuongList/soLuongCauHoi;
 	srand(time(NULL));
@@ -334,15 +335,16 @@ bool kiemtradapanchuan(char x)
 	return false;
 }
 
-double ThiTracNghiem(List l2)
+double ThiTracNghiem(List l2, List lichsu)
 {
-	double diemmax=10;
+	int diemmax=10;
 	int socauhoi;
 	socauhoi= sizeOfList(l2);
-	double diem=diemmax/double(socauhoi),sum =0;
+	double diem=double(diemmax)/double(socauhoi),sum =0;
 	char dapan;
 	Node *p=l2.lHead;
-	while (p)
+	Node *ls=lichsu.lHead;
+	while (p && ls)
 	{
 		cout<<p->data.stt<<": "<<p->data.cauHoi<<endl;
 		cout<<left<<setw(30)<<p->data.dapAnA<<left<<setw(30)<<p->data.dapAnB<<endl;
@@ -356,8 +358,12 @@ double ThiTracNghiem(List l2)
 		}
 		dapan=tolower(dapan);
 		if (dapan == p->data.ketQua)
+		{
 			sum += diem;
+		}
+		ls->data.ketQua=dapan;
 		cout<<endl;
+		ls=ls->pNext;
 		p=p->pNext;
 	}
 	return sum;
@@ -560,7 +566,7 @@ void printListlogin(ListLogin l)
 		cout << p->info.matkhau << endl;
 		cout << p->info.isAdmin << endl;
 		cout << endl;
-		p =p->next;
+		p = p->next;
 	}
 }
 
@@ -571,21 +577,6 @@ int soluongcauhoi(int n)
 }
 //giới hạn thời gian làm bài
 
-
-// Ham Tim Kiem Theo Cau Hoi Neu Co Thi Se Tra ve So Thu Tu
-// int search(List l, char cauhoi_tk[])
-// {
-// 	Node *p = l.lHead;
-// 	while (p != NULL)
-// 	{
-// 		// strstr dung de kiem tra chuoi chua chuoi tra ve NULL la khong chua
-// 		// strlwr dung de dua chuoi ve chu thuong (ngoai le: tolower chi chuyen chuoi chua 1 ky tu)
-// 		if (strstr(strlwr(p->data.cauHoi), strlwr(cauhoi_tk)) != NULL)
-// 			return p->data.stt;
-// 		p = p->pNext;
-// 	}
-// 	return 0;
-// }
 
 void search (List l, char cauhoi_tk[])
 {
@@ -727,54 +718,6 @@ void menu_admin()
 	cout<<"|------------------------------------------------|"<<endl;
 }
 
-void dangnhapkiemtraTN(List l, List l2, ListLogin lg, int cauhoi)
-{
-	string tk,mk;
-	double diem;
-	int lctn;
-	cout<<"\tDANG NHAP"<<endl;
-	cout<<"Tai khoan: ";
-	cin>>tk;
-	cout<<"Mat khau: ";
-	cin>>mk;
-	if (Dangnhap_tk(lg,tk,mk)==1)
-	{
-		sleep(1);
-		system("cls");
-		cout<<"\t\t BAT DAU LAM BAI THI"<<endl;
-		createRandomList(l, l2, cauhoi);
-		SapXepSTT(l2);
-		diem=ThiTracNghiem(l2);
-		cout<<"KET THUC BAI THI"<<endl;
-		Enter();
-		while (true)
-		{
-			system("cls");
-			menu_thitracnghiem();
-			cout<<"Lua chon cua ban: ";
-			cin>>lctn;
-			switch (lctn)
-			{
-				case 1:
-				{
-					cout<<"Diem thi cua ban: "<<diem<<"/10 diem"<<endl;
-					Enter();
-					break;
-				}
-				case 2:
-				{
-					exit(0);
-				}
-				case 3:
-				{
-					exit(0);
-				}
-			}
-		}
-		
-	}
-}
-
 // input password, hien thi mat khau vua nhap an voi *******
 string inputPassword(int maxLength){
 	string password;
@@ -795,16 +738,97 @@ string inputPassword(int maxLength){
 	return password;
 }
 
+void copycauhoi(List l2, List &lichsu)
+{
+	Node *p=l2.lHead;
+	while (p)
+	{
+		insertNode(lichsu,p->data);
+		p=p->pNext;
+	}
+}
+
+void sosanhcauhoi(List l2, List lichsu)
+{
+	Node *p=l2.lHead;
+	Node *ls=lichsu.lHead;
+	while (p && ls)
+	{
+		cout<<p->data.stt<<": "<<p->data.cauHoi<<endl;
+		cout<<left<<setw(30)<<p->data.dapAnA<<left<<setw(30)<<p->data.dapAnB<<endl;
+		cout<<left<<setw(30)<<p->data.dapAnC<<left<<setw(30)<<p->data.dapAnD<<endl;
+		cout<<"Dap an cua giao vien: "<<p->data.ketQua<<"\t\tDap an cua ban: "<<ls->data.ketQua<<endl;
+		ls=ls->pNext;
+		p=p->pNext;
+		cout<<endl;
+		sleep(1);
+	}
+}
+
+void dangnhapkiemtraTN(List l, List l2, ListLogin lg, int cauhoi, List lichsu)
+{
+	string tk,mk;
+	double diem;
+	int lctn;
+	cout<<"\tDANG NHAP"<<endl;
+	cout<<"Tai khoan: ";
+	cin>>tk;
+	cout<<"Mat khau: ";
+	mk = inputPassword(256);
+	if (Dangnhap_tk(lg,tk,mk)==1)
+	{
+		sleep(1);
+		system("cls");
+		cout<<"\t\t BAT DAU LAM BAI THI"<<endl;
+		Enter();
+		createRandomList(l, l2, cauhoi);
+		SapXepSTT(l2);
+		copycauhoi(l2,lichsu);
+		diem=ThiTracNghiem(l2,lichsu);
+		cout<<"\t\tKET THUC BAI THI"<<endl;
+		Enter();
+		while (true)
+		{
+			system("cls");
+			menu_thitracnghiem();
+			cout<<"Lua chon cua ban: ";
+			cin>>lctn;
+			switch (lctn)
+			{
+				case 1:
+				{
+					cout<<"Diem thi cua ban: "<<diem<<"/10 diem"<<endl;
+					Enter();
+					break;
+				}
+				case 2:
+				{
+					cout<<"\tDAP AN CHI TIET"<<endl;
+					sosanhcauhoi(l2,lichsu);
+					Enter();
+					break;
+				}
+				case 3:
+				{
+					cout<<"\t\tHOAN THANH BAI THI"<<endl;
+					exit(0);
+				}
+			}
+		}
+		
+	}
+}
+
 int main()
 {
-	List l,l2;
+	List l,l2,lichsu;
 	INIT(l);
 	INIT(l2);
+	INIT(lichsu);
 	docFileTracNghiem(l);
 	ListLogin lg;
 	initLogin(lg);
 	DocFileTKMK(lg);
-	// printListlogin(lg);
 	login info;
 	int cauhoi;
 	int luachon;
@@ -821,7 +845,7 @@ int main()
 		{
 			case 1:
 			{
-				dangnhapkiemtraTN(l,l2,lg,cauhoi);
+				dangnhapkiemtraTN(l,l2,lg,cauhoi,lichsu);
 				break;
 			}
 			case 2:
