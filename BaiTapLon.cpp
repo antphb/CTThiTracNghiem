@@ -5,6 +5,7 @@
 #include <time.h>
 #include <fstream>
 #include <unistd.h>
+#include <conio.h>
 using namespace std;
 
 typedef struct TRACNGHIEM
@@ -36,6 +37,7 @@ struct login
 	string namsinh;
 	string taikhoan;
 	string matkhau;
+	string isAdmin;
 };
 
 struct NodeLogin
@@ -315,6 +317,12 @@ void createRandomList(List l, List &l2, int soLuongCauHoi){
 	}
 }
 
+void Enter()
+{
+	cout<<"Nhan Enter de tiep tuc"<<endl;
+	getch();
+}
+
 bool kiemtradapanchuan(char x)
 {
 	char str[]="abcdABCD";
@@ -326,7 +334,7 @@ bool kiemtradapanchuan(char x)
 	return false;
 }
 
-int ThiTracNghiem(List l2)
+double ThiTracNghiem(List l2)
 {
 	double diemmax=10;
 	int socauhoi;
@@ -390,7 +398,8 @@ void DocFileTKMK(ListLogin &lg)
 		getline(ip,info.diachi,',');
         getline(ip,info.namsinh,',');
         getline(ip,info.taikhoan,',');
-        getline(ip,info.matkhau,'\n');
+        getline(ip,info.matkhau,',');
+		getline(ip,info.isAdmin,'\n');
 		insertlogin(lg,info);
 	}
 	ip.close();
@@ -428,25 +437,75 @@ void Luutk_vaofile(ListLogin l)
 		cout<<"Loi mo file"<<endl;
 		return;
 	}
-	op<<"Ho va Ten,Que Quan,Nam Sinh,Tai Khoan,Mat Khau\n";
+	op<<"Ho va Ten,Que Quan,Nam Sinh,Tai Khoan,Mat Khau,isAdmin\n";
 	for (NodeLogin *p=l.head; p!=NULL;p=p->next)
 	{
-		op<<p->info.hoten<<","<<p->info.diachi<<","<<p->info.namsinh<<","<<p->info.taikhoan<<","<<p->info.matkhau;
+		op<<p->info.hoten<<","<<p->info.diachi<<","<<p->info.namsinh<<","<<p->info.taikhoan<<","<<p->info.matkhau<<","<<p->info.isAdmin;
 		if (p != l.tail)
 			op<<endl;
 	}
 	op.close();
 }
 
-void Dangki_taikhoan(ListLogin &lg,login info)
+bool questionyn()
 {
-	if (check_dangki_tk(lg,info)==1)
+	string luachon;
+	cout<<"Nhan phim bat ki de lam lai (Nhan phim N de dung lai!!) ";
+	cin>>luachon;
+	if (luachon == "n" || luachon == "N")
 	{
-		cout<<"Tai khoan dang ki thanh cong\n";
-		Luutk_vaofile(lg);
+		return 0;
 	}
-	else
-		cout<<"Tai khoan da ton tai \n";
+	return 1;
+}
+
+void Dangki_taikhoan(ListLogin &lg)
+{
+	login info;
+	string mk;
+	while (true)
+	{
+		system("cls");
+		sleep(1);
+		cout<<"\t DANG KI TAI KHOAN "<<endl;
+		cin.ignore();
+		cout<<"Ho ten: ";
+		getline(cin,info.hoten);
+		cout<<"Dia chi: ";
+		getline(cin,info.diachi);
+		cout<<"Nam sinh: ";
+		getline(cin,info.namsinh);
+		cout<<"Tai khoan: ";
+		getline(cin,info.taikhoan);
+		info.isAdmin="0";
+		cout<<"Mat khau: ";
+		getline(cin,info.matkhau);
+		cout<<"Nhap lai mat khau: ";
+		getline(cin,mk);
+		if (mk.compare(info.matkhau)==0)
+		{
+			if (check_dangki_tk(lg,info)==1)
+			{
+				cout<<"Tai khoan dang ki thanh cong\n";
+				Luutk_vaofile(lg);
+				break;
+			}
+			else
+			{
+				cout<<"Tai khoan da ton tai \n";
+				if (questionyn()==0)
+					break;
+			}
+		}
+		else
+		{
+			cout<<"Mat khau khong khop!!!"<<endl;
+			if (questionyn()==0)
+				break;
+		}
+	}
+	Enter();
+	system("cls");
 }
 
 int Dangnhap_tk(ListLogin lg, string tk, string mk)
@@ -458,7 +517,7 @@ int Dangnhap_tk(ListLogin lg, string tk, string mk)
 	{
 		while (true)
 		{	
-			if (p->info.matkhau == mk && p->info.taikhoan==tk)
+			if (p->info.matkhau == mk && p->info.taikhoan==tk && p->info.isAdmin=="0")
 			{
 				cout<<"Dang nhap thanh cong!"<<endl;
 				return 1;
@@ -489,7 +548,6 @@ int Dangnhap_tk(ListLogin lg, string tk, string mk)
 	}
 }
 
-
 void printListlogin(ListLogin l)
 {
 	NodeLogin *p = l.head;
@@ -500,6 +558,7 @@ void printListlogin(ListLogin l)
 		cout << p->info.namsinh << endl;
 		cout << p->info.taikhoan << endl;
 		cout << p->info.matkhau << endl;
+		cout << p->info.isAdmin << endl;
 		cout << endl;
 		p =p->next;
 	}
@@ -647,15 +706,17 @@ void menu()
 
 void menu_thitracnghiem()
 {
+	cout<<"  CHUONG TRINH THI TRAC NGHIEM"<<endl;
 	cout<<"|------------------------------|"<<endl;
 	cout<<"|   1: Xem diem thi            |"<<endl;
 	cout<<"|   2: Xem dap an trac nghiem  |"<<endl;
-	cout<<"|   3: Thoat	                  |"<<endl;
+	cout<<"|   3: Thoat                   |"<<endl;
 	cout<<"|------------------------------|"<<endl;
 }
 
 void menu_admin()
 {
+	cout<<"\tCHUONG TRINH THI TRAC NGHIEM\t\t"<<endl;
 	cout<<"|------------------------------------------------|"<<endl;
 	cout<<"|   1: Tim kiem cau hoi						    |"<<endl;
 	cout<<"|   2: Cap nhat cau hoi						    |"<<endl;
@@ -664,6 +725,54 @@ void menu_admin()
 	cout<<"|   5: Cap nhat so luong cau hoi thi trac nghiem |"<<endl;
 	cout<<"|   6: Thoat va luu lai						    |"<<endl;
 	cout<<"|------------------------------------------------|"<<endl;
+}
+
+void dangnhapkiemtraTN(List l, List l2, ListLogin lg, int cauhoi)
+{
+	string tk,mk;
+	double diem;
+	int lctn;
+	cout<<"\tDANG NHAP"<<endl;
+	cout<<"Tai khoan: ";
+	cin>>tk;
+	cout<<"Mat khau: ";
+	cin>>mk;
+	if (Dangnhap_tk(lg,tk,mk)==1)
+	{
+		sleep(1);
+		system("cls");
+		cout<<"\t\t BAT DAU LAM BAI THI"<<endl;
+		createRandomList(l, l2, cauhoi);
+		SapXepSTT(l2);
+		diem=ThiTracNghiem(l2);
+		cout<<"KET THUC BAI THI"<<endl;
+		Enter();
+		while (true)
+		{
+			system("cls");
+			menu_thitracnghiem();
+			cout<<"Lua chon cua ban: ";
+			cin>>lctn;
+			switch (lctn)
+			{
+				case 1:
+				{
+					cout<<"Diem thi cua ban: "<<diem<<"/10 diem"<<endl;
+					Enter();
+					break;
+				}
+				case 2:
+				{
+					exit(0);
+				}
+				case 3:
+				{
+					exit(0);
+				}
+			}
+		}
+		
+	}
 }
 
 int main()
@@ -675,14 +784,15 @@ int main()
 	ListLogin lg;
 	initLogin(lg);
 	DocFileTKMK(lg);
+	// printListlogin(lg);
 	login info;
-	string tk,mk;
 	int cauhoi;
+	int luachon;
 	cauhoi=10;
+	system("cls");
 	while (true)
 	{
 		menu();
-		int luachon;
 		cout<<"Lua chon cua ban: ";
 		cin>>luachon;
 		sleep(1);
@@ -691,38 +801,12 @@ int main()
 		{
 			case 1:
 			{
-				cout<<"\tDANG NHAP"<<endl;
-				cout<<"Tai khoan: ";
-				cin>>tk;
-				cout<<"Mat khau: ";
-				cin>>mk;
-				if (Dangnhap_tk(lg,tk,mk)==1)
-				{
-					sleep(1);
-					system("cls");
-					cout<<"Bat dau lam bai thi! "<<endl;
-					createRandomList(l, l2, cauhoi);
-					SapXepSTT(l2);
-					ThiTracNghiem(l2);
-					menu_thitracnghiem();
-					// cout<<"Diem cua ban la: "<<sum<<"/10"<<endl<<endl;
-				}
+				dangnhapkiemtraTN(l,l2,lg,cauhoi);
 				break;
 			}
 			case 2:
 			{
-				cin.ignore();
-				cout<<"Ho ten: ";
-				getline(cin,info.hoten);
-				cout<<"Dia chi: ";
-				getline(cin,info.diachi);
-				cout<<"Nam sinh: ";
-				getline(cin,info.namsinh);
-				cout<<"Tai khoan: ";
-				getline(cin,info.taikhoan);
-				cout<<"Mat khau: ";
-				getline(cin,info.matkhau);
-				Dangki_taikhoan(lg,info);
+				Dangki_taikhoan(lg);
 				break;
 			}
 			case 3:

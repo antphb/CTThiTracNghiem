@@ -1,12 +1,8 @@
-Ho va Ten,Que Quan,Nam Sinh,Tai Khoan,Mat Khau
-Nguyen Dinh Thanh,Gia Lai,2001,antphb,123456
-Nguyen Van Hieu,Nghe An,2000,Hieurio,123456
-Nguyen Thi Hoai Thuong,Da Lat,2002,hoaithuong,123456
-Truong Van Thong,DakLak,2002,vanthong,123456
-Nguyen Van The Hoang,HCM,2002,thehoang,123456
-Thanh,chu se,2001,abcdc,123
-Thanh,chu se,2001,abcdcsd,123
-Thanh,chu se,2001,abcadcsd,123
-thanh,gia lai,2001,antphb1,123456
-thanh,chu se,2001,antphba,123456
-Thanh,Chu se,2001,antpphb2,123456
+Ho va Ten,Que Quan,Nam Sinh,Tai Khoan,Mat Khau,isAdmin
+admin,NULL,NULL,admin,admin,1
+Nguyen Dinh Thanh,Gia Lai,2001,antphb,123456,0
+Nguyen Van Hieu,Nghe An,2000,Hieurio,123456,0
+Nguyen Thi Hoai Thuong,Da Lat,2002,hoaithuong,123456,0
+Truong Van Thong,DakLak,2002,vanthong,123456,0
+Nguyen Van The Hoang,HCM,2002,thehoang,123456,0
+Thanh,Chu Se,2001,antphb1a,123456,0
