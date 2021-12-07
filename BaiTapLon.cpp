@@ -1,4 +1,4 @@
-#include <iostream>
+#include <bits/stdc++.h>
 #include <string.h>
 #include <math.h>
 #include <stdlib.h>
@@ -325,11 +325,12 @@ void ThiTracNghiem(List l2)
 	while (p)
 	{
 		cout<<p->data.stt<<": "<<p->data.cauHoi<<endl;
-		cout<<p->data.dapAnA<<"\t"<<p->data.dapAnB<<endl;
-		cout<<p->data.dapAnC<<"\t"<<p->data.dapAnD<<endl;
+		cout<<left<<setw(30)<<p->data.dapAnA<<left<<setw(30)<<p->data.dapAnB<<endl;
+		cout<<left<<setw(30)<<p->data.dapAnC<<left<<setw(30)<<p->data.dapAnD<<endl;
 		cout<<"Dap an: ";
 		cin>>dapan;
-		if (tolower(dapan) == p->data.ketQua)
+		dapan=tolower(dapan);
+		if (dapan == p->data.ketQua)
 			sum += diem;
 		cout<<endl;
 		p=p->pNext;
