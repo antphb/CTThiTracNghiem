@@ -692,7 +692,25 @@ void SapXepSTT(List &l2)
 		p=p->pNext;
 	}
 }
-
+// input password, hien thi mat khau vua nhap an voi *******
+string inputPassword(int maxLength){
+	string password;
+	for (char c; (c = getch()); ){
+		if (c == '\n' || c == '\r') { 
+            std::cout << "\n";
+            break;
+        } else if (c == '\b') {
+            std::cout << "\b \b";
+            if (!password.empty()) password.erase(password.size()-1);
+        } else if (c == -32) { 
+            _getch(); 
+        } else if (isprint(c) && password.size() < maxLength) { 
+            std::cout << '*';
+            password += c;
+        }
+	}
+	return password;
+}
 void menu()
 {
 	cout<<"\tCHUONG TRINH THI TRAC NGHIEM\t\t"<<endl;
@@ -801,7 +819,23 @@ int main()
 		{
 			case 1:
 			{
-				dangnhapkiemtraTN(l,l2,lg,cauhoi);
+				cout<<"\tDANG NHAP"<<endl;
+				cin.ignore();
+				cout<<"Tai khoan: ";
+				getline(cin, tk);
+				cout<<"Mat khau: ";
+				mk = inputPassword(256);
+				if (Dangnhap_tk(lg,tk,mk)==1)
+				{
+					sleep(1);
+					system("cls");
+					cout<<"Bat dau lam bai thi! "<<endl;
+					createRandomList(l, l2, cauhoi);
+					SapXepSTT(l2);
+					ThiTracNghiem(l2);
+					menu_thitracnghiem();
+					// cout<<"Diem cua ban la: "<<sum<<"/10"<<endl<<endl;
+				}
 				break;
 			}
 			case 2:
@@ -809,8 +843,16 @@ int main()
 				Dangki_taikhoan(lg);
 				break;
 			}
-			case 3:
-				exit(0);
+			case 3:{
+				cout<<"Ban chon dang nhap voi quyen quan tri vien!"<<endl;
+				cin.ignore();
+				string account;
+				cout<<"Nhap vao ten dang nhap: ";
+				getline(cin, account);
+				cout<<"Nhap vao mat khau: ";
+				string password = inputPassword(256); 
+				break;
+			}
 			case 4:
 				exit(0);
 		}
