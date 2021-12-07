@@ -654,6 +654,17 @@ void menu_thitracnghiem()
 	cout<<"|------------------------------|"<<endl;
 }
 
+void menu_admin()
+{
+	cout<<"|------------------------------------------------|"<<endl;
+	cout<<"|   1: Tim kiem cau hoi						    |"<<endl;
+	cout<<"|   2: Cap nhat cau hoi						    |"<<endl;
+	cout<<"|   3: Them cau hoi  					        |"<<endl;
+	cout<<"|   4: Xoa cau hoi	                            |"<<endl;
+	cout<<"|   5: Cap nhat so luong cau hoi thi trac nghiem |"<<endl;
+	cout<<"|------------------------------------------------|"<<endl;
+}
+
 int main()
 {
 	List l,l2;
