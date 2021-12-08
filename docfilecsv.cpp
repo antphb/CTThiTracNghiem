@@ -2,29 +2,18 @@
 using namespace std;
 int main()
 {
-    ifstream ip("tk.csv");
-    string hoten, diachi, namsinh, taikhoan, matkhau;
-    if (!ip.is_open())
+    ofstream op("lichsuthi.csv");
+    string line;
+    if (!op.is_open())
         cout<<"Loi mo file"<<endl;
-    while (ip.good())
+    op<<"Ho Ten,Nam sinh";
+    line="";
+    for (int i=0;i<10;i++)
     {
-        getline(ip,hoten,',');
-        getline(ip,diachi,',');
-        getline(ip,namsinh,',');
-        getline(ip,taikhoan,',');
-        getline(ip,matkhau,'\n');
-
-        cout<<"Name: "<<hoten<<"\n";
-        cout<<"Diachi: "<<diachi<<"\n";
-        cout<<"Nam: "<<namsinh<<"\n";
-        cout<<"Tk: "<<taikhoan<<"\n";
-        cout<<"Mk: "<<matkhau<<"\n";
-        cout<<"--------------------"<<endl;
-
+        // ostringstream convert;
+        // convert << i; 
+        // line = line+ "," + "Cau " + convert.str();
+        op<<","<<i;
     }
-    ip.close();
-
-    ofstream op("tk.csv",ios::app);
-    
     op.close();
 }

@@ -1,0 +1,34 @@
+Ho Ten: Nguyen Dinh Thanh
+Nam sinh: 2001
+Diem thi: 3/10 
+1:Trong Excel,De Luu Tap Tin Dang Mo duoi Ten Khac Ta Chon?
+Dap an dung: a
+Dap an TS: a
+2:Trong PowerPoint Muon Danh So Trang Cho Tung Slide Ta Dung
+Dap an dung: b
+Dap an TS: a
+3:Tai 1 Sile Trong PowerPoint Ta Dung To Hop Phim Nao De Xoa
+Dap an dung: c
+Dap an TS: b
+4:Nguoi Va May Tinh Giao Tiep thong Qua
+Dap an dung: b
+Dap an TS: c
+5:Hay Ke Ra Cac Thiet Bi Nhap
+Dap an dung: c
+Dap an TS: d
+6:Trong Excel , Khi Viet Sai Ham , MAy Bao Loi
+Dap an dung: a
+Dap an TS: a
+7:De Dong Nhanh 1 Cua So Ta Dung to Hop Phim
+Dap an dung: d
+Dap an TS: b
+8:Chon Phat Bieu Dung
+Dap an dung: a
+Dap an TS: c
+9:Dua Con Tro Ve Cuoi Van Ban Ta Su Dung?
+Dap an dung: c
+Dap an TS: d
+10:Trong WinDows Chuc Nang Disk Defragment Goi La?
+Dap an dung: a
+Dap an TS: a
+---------------------------------------------------

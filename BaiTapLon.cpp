@@ -6,6 +6,8 @@
 #include <fstream>
 #include <unistd.h>
 #include <conio.h>
+#include <dos.h>
+#include <ctime>
 using namespace std;
 
 typedef struct TRACNGHIEM
@@ -335,8 +337,17 @@ bool kiemtradapanchuan(char x)
 	return false;
 }
 
-double ThiTracNghiem(List l2, List lichsu)
+double ThiTracNghiem(List l2, List lichsu, double soPhutLamBai)
 {
+	time_t now = time(0);
+	 tm *ltm = localtime(&now);
+    cout << "Co  "<<soPhutLamBai<<" phut tinh tu luc: "<< ltm->tm_hour << ":";
+	cout << ltm->tm_min << ":";
+	cout << ltm->tm_sec << endl;
+	clockid_t t1,t2;	
+	t1 = clock();
+
+
 	int diemmax=10;
 	int socauhoi;
 	socauhoi= sizeOfList(l2);
@@ -346,6 +357,11 @@ double ThiTracNghiem(List l2, List lichsu)
 	Node *ls=lichsu.lHead;
 	while (p && ls)
 	{
+		t2 = clock();
+		double time_use = (double)(t2 - t1)/CLOCKS_PER_SEC;
+		if (time_use/60.0 > soPhutLamBai){
+			break;
+		}
 		cout<<p->data.stt<<": "<<p->data.cauHoi<<endl;
 		cout<<left<<setw(30)<<p->data.dapAnA<<left<<setw(30)<<p->data.dapAnB<<endl;
 		cout<<left<<setw(30)<<p->data.dapAnC<<left<<setw(30)<<p->data.dapAnD<<endl;
@@ -453,6 +469,26 @@ void Luutk_vaofile(ListLogin l)
 	op.close();
 }
 
+// input password, hien thi mat khau vua nhap an voi *******
+string inputPassword(int maxLength){
+	string password;
+	for (char c; (c = getch()); ){
+		if (c == '\n' || c == '\r') { 
+            std::cout << "\n";
+            break;
+        } else if (c == '\b') {
+            std::cout << "\b \b";
+            if (!password.empty()) password.erase(password.size()-1);
+        } else if (c == -32) { 
+            _getch(); 
+        } else if (isprint(c) && password.size() < maxLength) { 
+            std::cout << '*';
+            password += c;
+        }
+	}
+	return password;
+}
+
 bool questionyn()
 {
 	string luachon;
@@ -514,7 +550,8 @@ void Dangki_taikhoan(ListLogin &lg)
 	system("cls");
 }
 
-int Dangnhap_tk(ListLogin lg, string tk, string mk)
+
+NodeLogin *Dangnhap_tk(ListLogin lg, string tk, string mk)
 {
 	DocFileTKMK(lg);
 	NodeLogin *p=searchtk(lg,tk);
@@ -526,7 +563,7 @@ int Dangnhap_tk(ListLogin lg, string tk, string mk)
 			if (p->info.matkhau == mk && p->info.taikhoan==tk && p->info.isAdmin=="0")
 			{
 				cout<<"Dang nhap thanh cong!"<<endl;
-				return 1;
+				return p;
 			}
 			else
 			{
@@ -535,14 +572,14 @@ int Dangnhap_tk(ListLogin lg, string tk, string mk)
 				cin>>luachon;
 				if (luachon == "n" || luachon == "N")
 				{
-					return 0;
+					return NULL;
 				}
 				else
 				{
 					cout<<"Tai khoan: ";
 					cin>>tk;
 					cout<<"Mat khau: ";
-					cin>>mk;
+					mk = inputPassword(256);
 				}
 			} 
 		}
@@ -550,7 +587,7 @@ int Dangnhap_tk(ListLogin lg, string tk, string mk)
 	else
 	{
 		cout<<"Tai khoan chua dang ki!"<<endl;
-		return 0;
+		return NULL;
 	}
 }
 
@@ -718,26 +755,6 @@ void menu_admin()
 	cout<<"|------------------------------------------------|"<<endl;
 }
 
-// input password, hien thi mat khau vua nhap an voi *******
-string inputPassword(int maxLength){
-	string password;
-	for (char c; (c = getch()); ){
-		if (c == '\n' || c == '\r') { 
-            std::cout << "\n";
-            break;
-        } else if (c == '\b') {
-            std::cout << "\b \b";
-            if (!password.empty()) password.erase(password.size()-1);
-        } else if (c == -32) { 
-            _getch(); 
-        } else if (isprint(c) && password.size() < maxLength) { 
-            std::cout << '*';
-            password += c;
-        }
-	}
-	return password;
-}
-
 void copycauhoi(List l2, List &lichsu)
 {
 	Node *p=l2.lHead;
@@ -761,8 +778,33 @@ void sosanhcauhoi(List l2, List lichsu)
 		ls=ls->pNext;
 		p=p->pNext;
 		cout<<endl;
-		sleep(1);
 	}
+}
+
+void lichsuthicuathisinh(List l2,List lichsu, string hoten, string namsinh, double diemthi)
+{
+	ofstream op("lichsuthi.txt",ios::app);
+	Node *h=lichsu.lHead;
+	Node *p=l2.lHead;
+	if (!op.is_open())
+    {
+		cout<<"Loi mo file"<<endl;
+		return;
+	}
+	ostringstream convert;
+	convert << diemthi ; 
+	string thongtin="Ho Ten: "+ hoten+"\n"+"Nam sinh: "+namsinh+"\n" +"Diem thi: "+ convert.str()+"/10 " + "\n";
+	op<<thongtin;
+	while (h && p)
+	{
+		op<<h->data.stt<<":"<<h->data.cauHoi<<endl;
+		op<<"Dap an dung: "<<p->data.ketQua<<endl;
+		op<<"Dap an TS: "<<h->data.ketQua<<endl;
+		h=h->pNext;
+		p=p->pNext;
+	}
+	op<<"---------------------------------------------------"<<endl;
+	op.close();
 }
 
 void dangnhapkiemtraTN(List l, List l2, ListLogin lg, int cauhoi, List lichsu)
@@ -775,8 +817,18 @@ void dangnhapkiemtraTN(List l, List l2, ListLogin lg, int cauhoi, List lichsu)
 	cin>>tk;
 	cout<<"Mat khau: ";
 	mk = inputPassword(256);
-	if (Dangnhap_tk(lg,tk,mk)==1)
+	NodeLogin *dn=Dangnhap_tk(lg,tk,mk);
+	if (dn!=NULL)
 	{
+		int soPhutLamBai;
+		do{
+			cout<<"\t\tNhap vao so phut can lam(nhap 0 thi lam theo so phut thi thuc): ";
+			cin>>soPhutLamBai;
+			if (soPhutLamBai == 0){
+				soPhutLamBai = 30;
+				break;
+			}
+		} while (soPhutLamBai <= 0);
 		sleep(1);
 		system("cls");
 		cout<<"\t\t BAT DAU LAM BAI THI"<<endl;
@@ -784,8 +836,9 @@ void dangnhapkiemtraTN(List l, List l2, ListLogin lg, int cauhoi, List lichsu)
 		createRandomList(l, l2, cauhoi);
 		SapXepSTT(l2);
 		copycauhoi(l2,lichsu);
-		diem=ThiTracNghiem(l2,lichsu);
+		diem=ThiTracNghiem(l2,lichsu,soPhutLamBai);
 		cout<<"\t\tKET THUC BAI THI"<<endl;
+		lichsuthicuathisinh(l2,lichsu,dn->info.hoten,dn->info.namsinh,diem);
 		Enter();
 		while (true)
 		{
@@ -855,13 +908,13 @@ int main()
 			}
 			case 3:
 			{
-				cout<<"Ban chon dang nhap voi quyen quan tri vien!"<<endl;
-				cin.ignore();
-				string account;
-				cout<<"Tai Khoan: ";
-				getline(cin, account);
-				cout<<"Mat Khau: ";
-				string password = inputPassword(256); 
+				// cout<<"Ban chon dang nhap voi quyen quan tri vien!"<<endl;
+				// cin.ignore();
+				// string account;
+				// cout<<"Tai Khoan: ";
+				// getline(cin, account);
+				// cout<<"Mat Khau: ";
+				// string password = inputPassword(256); 
 			}
 			case 4:
 				exit(0);
