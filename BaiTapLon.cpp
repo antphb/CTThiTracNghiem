@@ -337,13 +337,26 @@ bool kiemtradapanchuan(char x)
 	return false;
 }
 
+// int sophutlambai()
+// {
+// 	int soPhutLamBai;
+// 	do
+// 	{
+// 		cout<<"\t\tNhap vao so phut can lam (nhap 0 thi lam theo so phut thi thuc): ";
+// 		cin>>soPhutLamBai;
+// 		if (soPhutLamBai == 0)
+// 		{
+// 			soPhutLamBai = 10;
+// 			return soPhutLamBai;
+// 		}
+// 	} while (soPhutLamBai <= 0);
+// }
+
 double ThiTracNghiem(List l2, List lichsu, double soPhutLamBai)
 {
 	time_t now = time(0);
-	 tm *ltm = localtime(&now);
-    cout << "Co  "<<soPhutLamBai<<" phut tinh tu luc: "<< ltm->tm_hour << ":";
-	cout << ltm->tm_min << ":";
-	cout << ltm->tm_sec << endl;
+	tm *ltm = localtime(&now);
+    cout << "Co "<<soPhutLamBai<<" phut lam bai thi tinh tu luc: "<< ltm->tm_hour << ":"<< ltm->tm_min << " den: "<< ltm->tm_hour << ":"<< ltm->tm_min + soPhutLamBai<<endl<<endl;
 	clockid_t t1,t2;	
 	t1 = clock();
 	int diemmax=10;
@@ -357,7 +370,10 @@ double ThiTracNghiem(List l2, List lichsu, double soPhutLamBai)
 	{
 		t2 = clock();
 		double time_use = (double)(t2 - t1)/CLOCKS_PER_SEC;
-		if (time_use/60.0 > soPhutLamBai){
+		if (time_use/60.0 > soPhutLamBai)
+		{
+			cout<<"Het thoi gian lam bai "<<endl;
+			cout<<"Diem se duoc tinh tren nhung cau ban lam"<<endl;
 			break;
 		}
 		cout<<p->data.stt<<": "<<p->data.cauHoi<<endl;
@@ -437,6 +453,7 @@ NodeLogin *searchtk(ListLogin l, string tk)
 	}
 	return NULL;
 }
+
 // ham kiem tra tai khoang da duoc dang ki chua, neu chua thi them vao list
 int check_dangki_tk(ListLogin &l, login data)
 {
@@ -805,7 +822,7 @@ void lichsuthicuathisinh(List l2,List lichsu, string hoten, string namsinh, doub
 	op.close();
 }
 
-void dangnhapkiemtraTN(List l, List l2, ListLogin lg, int cauhoi, List lichsu)
+void dangnhapkiemtraTN(List l, List l2, ListLogin lg, int cauhoi, List lichsu,int soPhutLamBai)
 {
 	string tk,mk;
 	double diem;
@@ -818,26 +835,8 @@ void dangnhapkiemtraTN(List l, List l2, ListLogin lg, int cauhoi, List lichsu)
 	NodeLogin *dn=Dangnhap_tk(lg,tk,mk);
 	if (dn!=NULL)
 	{
-		int soPhutLamBai;
-		do{
-			cout<<"\t\tNhap vao so phut can lam(nhap 0 thi lam theo so phut thi thuc): ";
-			cin>>soPhutLamBai;
-			if (soPhutLamBai == 0){
-				soPhutLamBai = 30;
-				break;
-			}
-		} while (soPhutLamBai <= 0);
 		sleep(1);
 		system("cls");
-		int soPhutLamBai;
-		do{
-			cout<<"\t\tNhap vao so phut can lam(nhap 0 thi lam theo so phut thi thuc): ";
-			cin>>soPhutLamBai;
-			if (soPhutLamBai == 0){
-				soPhutLamBai = 30;
-				break;
-			}
-		} while (soPhutLamBai <= 0);
 		cout<<"\t\t BAT DAU LAM BAI THI"<<endl;
 		Enter();
 		createRandomList(l, l2, cauhoi);
@@ -875,7 +874,6 @@ void dangnhapkiemtraTN(List l, List l2, ListLogin lg, int cauhoi, List lichsu)
 				}
 			}
 		}
-		
 	}
 }
 
@@ -890,9 +888,9 @@ int main()
 	initLogin(lg);
 	DocFileTKMK(lg);
 	login info;
-	int cauhoi;
+	int cauhoi=10;
+	int sophutlambai=1;
 	int luachon;
-	cauhoi=10;
 	system("cls");
 	while (true)
 	{
@@ -905,7 +903,7 @@ int main()
 		{
 			case 1:
 			{
-				dangnhapkiemtraTN(l,l2,lg,cauhoi,lichsu);
+				dangnhapkiemtraTN(l,l2,lg,cauhoi,lichsu,sophutlambai);
 				break;
 			}
 			case 2:
@@ -922,76 +920,10 @@ int main()
 				// getline(cin, account);
 				// cout<<"Mat Khau: ";
 				// string password = inputPassword(256); 
+				break;
 			}
 			case 4:
 				exit(0);
 		}
 	}
 }
-
-//int main()
-//{
-//	List l;
-//	INIT(l);
-//	docFileTracNghiem(l);
-//	printList(l);
-//search
-	// cout<<"Nhap Tu Khoa Muon Tim: "; char a[255]; cin.getline(a,255);
-	// search(l,a);
-	//cap nhat
-//	cout<<"Nhap tu khoa: "; char b[255]; cin.getline(b,255);
-//	search(l,b);
-//	cout<<"Nhap STT: "; int stt; cin>>stt;
-//	cin.ignore();
-//		
-//	if( stt>sizeOfList(l) || stt<1)
-//		cout<<"Khong tim thay";
-//	else
-//	{	
-//		Node *p;
-//		cout << "\nNhap Cau Hoi Moi: ";
-//		cin.getline(p->data.cauHoi, 255);
-//		cout << "Nhap Dap An A Moi: ";
-//		cin.getline(p->data.dapAnA, 255);
-//		cout << "Nhap Dap An B Moi: ";
-//		cin.getline(p->data.dapAnB, 255);
-//		cout << "Nhap Dap An C Moi: ";
-//		cin.getline(p->data.dapAnC, 255);
-//		cout << "Nhap Dap An D Moi: ";
-//		cin.getline(p->data.dapAnD, 255);
-//		cout << "Nhap Ket Qua Moi: ";
-//		cin >> p->data.ketQua;
-//		if (capNhatTheoSTT(l, stt, p->data) == true)
-//		{
-//			cout << "Cap Nhat Thanh Cong";
-//			while(p){
-//				if(p->data.stt==1)
-//					ghiMoiFile(p->data);	
-//				else
-//					ghiCauTracNghiemVaoFile(p->data);
-//				p = p->pNext;
-//			}
-//		}
-//		else
-//			cout << "Cap Nhat That Bai";
-//	}
-//	printList(l);
-	//Xoa
-//	cout<<"Nhap STT Muon Xoa: "; int stt;cin>>stt;
-//	if(xoaTheoSTT(l,stt)==true)
-//	{
-//		cout<<"Xoa Thanh Cong";
-//		SapXepSTT(l);
-//		Node *p = l.lHead;
-//		while(p!=NULL)
-//		{
-//			if(p->data.stt==1)
-//				ghiMoiFile(p->data);
-//			else
-//				ghiCauTracNghiemVaoFile(p->data);
-//			p=p->pNext;
-//		}
-//	}
-//	else
-//		cout<<"Xoa That Bai";
-//	printList(l);
