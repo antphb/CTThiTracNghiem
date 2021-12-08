@@ -213,6 +213,24 @@ bool ghiCauTracNghiemVaoFile(TRACNGHIEM data){
 	return true;
 }
 
+// xoa truoc khi ghi vao file, dung cho cau 1 de luu lai file
+bool ghiMoiFile(TRACNGHIEM data){
+	ofstream ghiFile("cauhoi.txt");
+	if (ghiFile.bad()){
+		cout<<"Khong the mo file de ghi!";
+		return false;
+	}
+	ghiFile<<data.stt<<endl;
+	ghiFile<<data.cauHoi<<endl;
+	ghiFile<<data.dapAnA<<endl;
+	ghiFile<<data.dapAnB<<endl;
+	ghiFile<<data.dapAnC<<endl;
+	ghiFile<<data.dapAnD<<endl;
+	ghiFile<<data.ketQua<<endl;
+	ghiFile.close();
+	return true;
+}
+
 // xoa ki tu trong chuoi theo vi tri
 void xoaTaiViTri(char str[], int index){
 	for (int i = index; i < strlen(str); i++){
@@ -577,12 +595,12 @@ NodeLogin *Dangnhap_tk(ListLogin lg, string tk, string mk)
 		{	
 			if (p->info.matkhau == mk && p->info.taikhoan==tk && p->info.isAdmin=="0")
 			{
-				cout<<"Dang nhap thanh cong!"<<endl;
+				cout<<"\t\tDang nhap thanh cong!"<<endl;
 				return p;
 			}
 			else
 			{
-				cout<<"Tai khoan hoac mat khau sai!"<<endl;
+				cout<<"\t\tTai khoan hoac mat khau sai!"<<endl;
 				cout<<"Nhan phim bat ki de dang nhap lai (Nhan phim N khong dang nhap lai!!) ";
 				cin>>luachon;
 				if (luachon == "n" || luachon == "N")
@@ -601,7 +619,7 @@ NodeLogin *Dangnhap_tk(ListLogin lg, string tk, string mk)
 	}
 	else
 	{
-		cout<<"Tai khoan chua dang ki!"<<endl;
+		cout<<"\t\tTai khoan chua dang ki!"<<endl;
 		return NULL;
 	}
 }
@@ -621,14 +639,6 @@ void printListlogin(ListLogin l)
 		p = p->next;
 	}
 }
-
-// Có thể chọn số lượng câu hỏi cho bài làm
-int soluongcauhoi(int n)
-{
-	return n;
-}
-//giới hạn thời gian làm bài
-
 
 void search (List l, char cauhoi_tk[])
 {
@@ -760,14 +770,17 @@ void menu_thitracnghiem()
 void menu_admin()
 {
 	cout<<"\tCHUONG TRINH THI TRAC NGHIEM\t\t"<<endl;
-	cout<<"|------------------------------------------------|"<<endl;
-	cout<<"|   1: Tim kiem cau hoi						    |"<<endl;
-	cout<<"|   2: Cap nhat cau hoi						    |"<<endl;
-	cout<<"|   3: Them cau hoi  					        |"<<endl;
-	cout<<"|   4: Xoa cau hoi	                            |"<<endl;
-	cout<<"|   5: Cap nhat so luong cau hoi thi trac nghiem |"<<endl;
-	cout<<"|   6: Thoat va luu lai						    |"<<endl;
-	cout<<"|------------------------------------------------|"<<endl;
+	cout<<"|-------------------------------------------------------|"<<endl;
+	cout<<"|   1: Xuat tat ca cau hoi                              |"<<endl;
+	cout<<"|   2: Tim kiem cau hoi                                 |"<<endl;
+	cout<<"|   3: Cap nhat cau hoi                                 |"<<endl;
+	cout<<"|   4: Them cau hoi                                     |"<<endl;
+	cout<<"|   5: Xoa cau hoi                                      |"<<endl;
+	cout<<"|   6: Cap nhat so luong cau hoi thi trac nghiem        |"<<endl;
+	cout<<"|   7: Cap nhat thoi gian thi trac nghiem               |"<<endl;
+	cout<<"|   8: Thoat va luu lai file                            |"<<endl;
+	cout<<"|   9: Quay lai man hinh chinh                          |"<<endl;
+	cout<<"|-------------------------------------------------------|"<<endl;
 }
 
 void copycauhoi(List l2, List &lichsu)
@@ -877,6 +890,286 @@ void dangnhapkiemtraTN(List l, List l2, ListLogin lg, int cauhoi, List lichsu,in
 	}
 }
 
+void xuatCauHoiTheoSTT(List l,int stt)
+{
+	Node*p=l.lHead;
+	if(searchSTT(l,stt)==1)
+	{
+		while (p != NULL)
+		{
+			if (p->data.stt == stt)
+				cout<<stt<<". "<<p->data.cauHoi<<endl;
+			p = p->pNext;
+		}
+		cout<<"Tim Kiem Thanh Cong!";
+	}
+	else
+		cout<<"\nTim Kiem That Bai!";
+}
+
+void thucThiTimKiem(List l)
+{
+	int select,flag=0;
+	do
+	{
+		cout<<"Ban Muon Tim Kiem Theo: ";
+		cout<<"\n1.So Thu Tu";
+		cout<<"\n2.Tu Khoa";
+		cout<<"\nNhap Phuong Thuc Tim: ";
+		cin>>select;
+		cin.ignore();
+		if(select==1)
+		{
+			int stt;
+			cout<<"Nhap So Thu Tu :";
+			cin>>stt;
+			cin.ignore();
+			xuatCauHoiTheoSTT(l,stt);
+			cout<<"\n\n";
+			flag=0;
+		}
+		else if(select==2)
+		{
+			char a[255];
+			cout<<"Nhap Tu Khoa Muon Tim: ";  
+			cin.getline(a,255);
+			search(l,a);
+			cout<<"\n\n";
+			flag=0;
+		}
+		else
+		{
+			cout<<"Nhap lai!\n";
+			flag=1;
+		}
+	}while(flag!=0);
+}
+
+TRACNGHIEM nhapCapNhat(TRACNGHIEM &data)
+{
+	cout << "\nNhap Cau Hoi Moi: ";
+	cin.getline(data.cauHoi, 255);
+	cout << "Nhap Dap An A Moi: ";
+	cin.getline(data.dapAnA, 255);
+	cout << "Nhap Dap An B Moi: ";
+	cin.getline(data.dapAnB, 255);
+	cout << "Nhap Dap An C Moi: ";
+	cin.getline(data.dapAnC, 255);
+	cout << "Nhap Dap An D Moi: ";
+	cin.getline(data.dapAnD, 255);
+	do{
+		cout<<"Nhap vao dap an moi(a, b, c, d): ";
+		cin>>data.ketQua;
+	} while (kiemtradapanchuan(data.ketQua)==false);
+	return data;
+}
+
+void thucThiCapNhat(List&l)
+{
+	TRACNGHIEM tn;
+	int select,flag;
+	do
+	{
+		cout<<"\nBan Muon Cap Nhat Theo: ";
+		cout<<"\n1.So Thu Tu";
+		cout<<"\n2.Tu Khoa";
+		cout<<"\nNhap Phuong Thuc Cap Nhat: ";
+		cin>>select;
+		cin.ignore();
+		if(select==1)
+		{
+			int stt;
+			cout<<"Nhap So Thu Tu :";
+			cin>>stt;
+			cin.ignore();
+			xuatCauHoiTheoSTT(l,stt);
+			if(searchSTT(l,stt)==1)
+			{
+				cout<<"\n\tBat Dau Cap Nhat!\n";
+				tn=nhapCapNhat(tn);
+				capNhatTheoSTT(l,stt,tn);
+				if (capNhatTheoSTT(l, stt, tn) == true)
+					cout << "\nCap Nhat Thanh Cong!";
+				else
+					cout << "\nCap Nhat That Bai!";
+				cout<<"\n\n";
+				flag=0;
+			}
+		}
+		else if(select==2)
+		{
+			int stt;
+			char a[255];
+			cout<<"Nhap Tu Khoa Muon Tim: ";  
+			cin.getline(a,255);
+			search(l,a);
+			cout<<"Nhap So Thu Tu: ";
+			cin>>stt;
+			cin.ignore();
+			if(searchSTT(l,stt)==1)
+			{
+				cout<<"\n\tBat Dau Cap Nhat!\n";
+				tn=nhapCapNhat(tn);
+				capNhatTheoSTT(l,stt,tn);
+				if (capNhatTheoSTT(l, stt, tn) == true)
+					cout << "\nCap Nhat Thanh Cong";
+				else
+					cout << "\nCap Nhat That Bai";
+				cout<<"\n\n";
+				flag=0;
+			}
+		}
+		else
+		{
+			cout<<"Nhap Lai!\n";
+			flag=1;
+		}
+	}while(flag!=0);
+}
+
+void thucThiXoa(List&l)
+{
+	int select,flag;
+	do
+	{
+		cout<<"Ban Muon Tim Xoa Theo: ";
+		cout<<"\n1.So Thu Tu";
+		cout<<"\n2.Tu Khoa";
+		cout<<"\nNhap Phuong Thuc Tim Xoa: ";
+		cin>>select;
+		cin.ignore();
+		if(select==1)
+		{
+			int stt;
+			cout<<"Nhap So Thu Tu :";
+			cin>>stt;
+			cin.ignore();
+			xuatCauHoiTheoSTT(l,stt);
+			if(xoaTheoSTT(l,stt)==true)
+			{
+				cout<<"Xoa Thanh Cong!";
+				SapXepSTT(l);
+			}
+			else
+				cout<<"Xoa That Bai!";
+			cout<<"\n\n";
+			flag=0;
+		}
+		else if(select==2)
+		{
+			int stt;
+			char a[255];
+			cout<<"Nhap Tu Khoa Muon Tim: ";  
+			cin.getline(a,255);
+			search(l,a);
+			cout<<"\nNhap So Thu Tu: ";
+			cin>>stt;
+			cin.ignore();
+			if(xoaTheoSTT(l,stt)==true)
+			{
+				cout<<"Xoa Thanh Cong!";
+				SapXepSTT(l);
+			}
+			else
+				cout<<"Xoa That Bai!";
+			cout<<"\n\n";
+			flag=0;
+		}
+		else
+		{
+			cout<<"Nhap Lai!\n";
+			flag=1;
+		}
+	}while(flag!=0);
+}
+
+void luuFile(List l)
+{
+	Node*p=l.lHead;
+	while(p)
+	{
+		ghiCauTracNghiemVaoFile(p->data);
+		p = p->pNext;
+	}
+}
+
+int checkAdmin(ListLogin lg,string tk, string mk)
+{
+	NodeLogin *p=lg.head;
+	while (p)
+	{
+		if (p->info.taikhoan==tk && p->info.matkhau==mk && p->info.isAdmin == "1")
+			return 1;
+		p=p->next;
+	}
+	return 0;
+}
+
+void quyenadmin(ListLogin lg,List l, int &cauhoi,int &sophutlambai )
+{
+	string tk,mk;
+	cout<<"\tDANG NHAP VOI QUYEN QUAN TRI VIEN"<<endl;
+	cout<<"Tai khoan: ";
+	cin>>tk;
+	cout<<"Mat khau: ";
+	mk = inputPassword(256);
+	if (checkAdmin(lg,tk,mk)==1)
+	{
+		cout<<"\t\tDang nhap thanh cong"<<endl;
+		Enter();
+		int chon;
+		do
+		{
+			system("cls");
+			menu_admin();
+			cout<<"Nhap Lua Chon: ";
+			cin>>chon;
+			cin.ignore();
+			switch(chon)
+			{
+				case 1:
+					printList(l);
+					Enter();
+					break;
+				case 2:
+					thucThiTimKiem(l);
+					Enter();
+					break;
+				case 3:
+					thucThiCapNhat(l);
+					Enter();
+					break;
+				case 4:
+					themCauHoi(l);
+					Enter();
+					break;
+				case 5:
+					thucThiXoa(l);
+					Enter();
+					break;
+				case 6:
+					cout<<"Nhap so luong cau hoi moi: ";
+					cin>>cauhoi;
+					Enter();
+					break;
+				case 7: 
+					cout<<"Nhap thoi gian lam bai moi: ";
+					cin>>sophutlambai;
+					Enter();
+					break;
+				case 8:
+					luuFile(l);	
+					exit(0);
+					break;
+			}	
+		}while (chon>0&&chon<9);
+	}
+	else
+	{
+		cout<<"Dang nhap that bai"<<endl;
+	}
+}
+
 int main()
 {
 	List l,l2,lichsu;
@@ -913,13 +1206,8 @@ int main()
 			}
 			case 3:
 			{
-				// cout<<"Ban chon dang nhap voi quyen quan tri vien!"<<endl;
-				// cin.ignore();
-				// string account;
-				// cout<<"Tai Khoan: ";
-				// getline(cin, account);
-				// cout<<"Mat Khau: ";
-				// string password = inputPassword(256); 
+				quyenadmin(lg,l,cauhoi,sophutlambai);
+				system("cls");
 				break;
 			}
 			case 4:
