@@ -6,6 +6,8 @@
 #include <fstream>
 #include <unistd.h>
 #include <conio.h>
+#include <dos.h>
+#include <ctime>
 using namespace std;
 
 typedef struct TRACNGHIEM
@@ -335,8 +337,15 @@ bool kiemtradapanchuan(char x)
 	return false;
 }
 
-double ThiTracNghiem(List l2, List lichsu)
+double ThiTracNghiem(List l2, List lichsu, double soPhutLamBai)
 {
+	time_t now = time(0);
+	 tm *ltm = localtime(&now);
+    cout << "Co  "<<soPhutLamBai<<" phut tinh tu luc: "<< ltm->tm_hour << ":";
+   	cout << ltm->tm_min << ":";
+   	cout << ltm->tm_sec << endl;
+	clockid_t t1,t2;	
+	t1 = clock();
 	int diemmax=10;
 	int socauhoi;
 	socauhoi= sizeOfList(l2);
@@ -346,6 +355,11 @@ double ThiTracNghiem(List l2, List lichsu)
 	Node *ls=lichsu.lHead;
 	while (p && ls)
 	{
+		t2 = clock();
+		double time_use = (double)(t2 - t1)/CLOCKS_PER_SEC;
+		if (time_use/60.0 > soPhutLamBai){
+			break;
+		}  
 		cout<<p->data.stt<<": "<<p->data.cauHoi<<endl;
 		cout<<left<<setw(30)<<p->data.dapAnA<<left<<setw(30)<<p->data.dapAnB<<endl;
 		cout<<left<<setw(30)<<p->data.dapAnC<<left<<setw(30)<<p->data.dapAnD<<endl;
@@ -779,12 +793,21 @@ void dangnhapkiemtraTN(List l, List l2, ListLogin lg, int cauhoi, List lichsu)
 	{
 		sleep(1);
 		system("cls");
+		int soPhutLamBai;
+		do{
+			cout<<"\t\tNhap vao so phut can lam(nhap 0 thi lam theo so phut thi thuc): ";
+			cin>>soPhutLamBai;
+			if (soPhutLamBai == 0){
+				soPhutLamBai = 30;
+				break;
+			}
+		} while (soPhutLamBai <= 0);
 		cout<<"\t\t BAT DAU LAM BAI THI"<<endl;
 		Enter();
 		createRandomList(l, l2, cauhoi);
 		SapXepSTT(l2);
 		copycauhoi(l2,lichsu);
-		diem=ThiTracNghiem(l2,lichsu);
+		diem=ThiTracNghiem(l2,lichsu, soPhutLamBai);
 		cout<<"\t\tKET THUC BAI THI"<<endl;
 		Enter();
 		while (true)
