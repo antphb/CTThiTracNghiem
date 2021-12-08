@@ -346,8 +346,6 @@ double ThiTracNghiem(List l2, List lichsu, double soPhutLamBai)
 	cout << ltm->tm_sec << endl;
 	clockid_t t1,t2;	
 	t1 = clock();
-
-
 	int diemmax=10;
 	int socauhoi;
 	socauhoi= sizeOfList(l2);
@@ -831,6 +829,15 @@ void dangnhapkiemtraTN(List l, List l2, ListLogin lg, int cauhoi, List lichsu)
 		} while (soPhutLamBai <= 0);
 		sleep(1);
 		system("cls");
+		int soPhutLamBai;
+		do{
+			cout<<"\t\tNhap vao so phut can lam(nhap 0 thi lam theo so phut thi thuc): ";
+			cin>>soPhutLamBai;
+			if (soPhutLamBai == 0){
+				soPhutLamBai = 30;
+				break;
+			}
+		} while (soPhutLamBai <= 0);
 		cout<<"\t\t BAT DAU LAM BAI THI"<<endl;
 		Enter();
 		createRandomList(l, l2, cauhoi);
