@@ -649,6 +649,7 @@ NodeLogin *Dangnhap_tk(ListLogin lg, string tk, string mk)
 	}
 }
 
+// in danh sach thong tin thi sinh 
 void printListlogin(ListLogin l)
 {
 	NodeLogin *p = l.head;
@@ -657,9 +658,6 @@ void printListlogin(ListLogin l)
 		cout << p->info.hoten << endl;
 		cout << p->info.diachi << endl;
 		cout << p->info.namsinh << endl;
-		cout << p->info.taikhoan << endl;
-		cout << p->info.matkhau << endl;
-		cout << p->info.isAdmin << endl;
 		cout << endl;
 		p = p->next;
 	}
@@ -897,7 +895,7 @@ void dangnhapkiemtraTN(List l, List l2, ListLogin lg, int cauhoi, List lichsu, i
 			system("cls");
 			menu_thitracnghiem();
 			cout << "Lua chon cua ban: ";
-			cin >> lctn;
+			lctn=Selection(1,3);
 			switch (lctn)
 			{
 			case 1:
@@ -1102,7 +1100,7 @@ void thucThiXoa(List &l)
 	}
 }
 
-
+// luu file cau hoi
 void luuFile(List l)
 {
 	ofstream ghiFile("cauhoi.txt");
@@ -1120,6 +1118,7 @@ void luuFile(List l)
 	ghiFile.close();
 }
 
+// kiem tra xem co phai admin ko
 int checkAdmin(ListLogin lg, string tk, string mk)
 {
 	NodeLogin *p = lg.head;
@@ -1238,7 +1237,7 @@ int main()
 			break;
 		}
 		case 4:
-			cout<<"\t\tCAM ON DA SU DUNG CHUNG TRINH"<<endl;
+			cout<<"\t\tCAM ON DA SU DUNG CHUONG TRINH"<<endl;
 			sleep(1);
 			exit(0);
 		}
