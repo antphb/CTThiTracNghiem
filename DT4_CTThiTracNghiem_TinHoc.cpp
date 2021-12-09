@@ -8,6 +8,8 @@
 #include <conio.h>
 #include <dos.h>
 #include <ctime>
+#include <sstream>
+#include "ThuVienDoHoa.h"
 using namespace std;
 
 typedef struct TRACNGHIEM
@@ -314,7 +316,6 @@ bool themCauHoi(List &l)
 	return ghiCauTracNghiemVaoFile(data);
 }
 
-
 // ham tra ve so luong node trong list
 int sizeOfList(List l)
 {
@@ -356,23 +357,27 @@ void createRandomList(List l, List &l2, int soLuongCauHoi)
 
 int Selection(int min, int max)
 {
-	int lc;
-	cout<<"Lua chon: ";
+	char lc;
+	cout <<"\t\t\t\t\tLua chon: ";
 	cin>>lc;
-	while (lc < min || lc > max )
+	int lcs;
+	lcs=lc-'0';
+	while (!(lc >= '0' && lc <= '9') || (lcs < min || lcs > max))
 	{
-		cout<<"Nhap lai lua chon: ";
-		cin>>lc;
+		cout << "\t\t\t\t\tNhap lai lua chon: ";
+		cin >> lc;
+		lcs=lc-'0';
 	}
-	return lc;
+	return lcs;
 }
 
 void Enter()
 {
-	cout << "Nhan Enter de tiep tuc" << endl;
+	textcolor(6);
+	cout << "\t\t\t\t\tNhan Enter de tiep tuc" << endl;
+	textcolor(15);
 	getch();
 }
-
 
 bool kiemtradapanchuan(char x)
 {
@@ -385,41 +390,42 @@ bool kiemtradapanchuan(char x)
 	return false;
 }
 
-int thoigianGio(int hour, int min, double soPhutLamBai )
+int thoigianGio(int hour, int min, double soPhutLamBai)
 {
-	if((min + soPhutLamBai) > 60)
+	if ((min + soPhutLamBai) > 60)
 	{
-		hour= hour +1;
+		hour = hour + 1;
 	}
 	else
 	{
-		hour=hour;
+		hour = hour;
 	}
 	return hour;
 }
 
-int thoigianPhut(int hour, int min, double soPhutLamBai )
+int thoigianPhut(int hour, int min, double soPhutLamBai)
 {
-	if((min + soPhutLamBai) > 60)
+	if ((min + soPhutLamBai) > 60)
 	{
-		min=soPhutLamBai - (60 -min);
+		min = soPhutLamBai - (60 - min);
 	}
 	else
 	{
-		min=min+soPhutLamBai;
+		min = min + soPhutLamBai;
 	}
 	return min;
 }
 
-// ham thi trac nghiem tinh thoi gian lam bai tu: ... den: 
-// Neu ko hoan thanh kip bai thi theo thoi gian da chi dinh thi chuong trinh tu dong dung va tinh diem cac cau da lam 
+// ham thi trac nghiem tinh thoi gian lam bai tu: ... den:
+// Neu ko hoan thanh kip bai thi theo thoi gian da chi dinh thi chuong trinh tu dong dung va tinh diem cac cau da lam
 double ThiTracNghiem(List l2, List lichsu, double soPhutLamBai)
 {
 	time_t now = time(0);
 	tm *ltm = localtime(&now);
-	int GioHoanThanh=thoigianGio(ltm->tm_hour,ltm->tm_min,soPhutLamBai);
-	int PhutHoanThanh= thoigianPhut(ltm->tm_hour,ltm->tm_min,soPhutLamBai);
-	cout << "\t\t\t\tBan co " << soPhutLamBai << " phut lam bai thi tinh tu luc: " << ltm->tm_hour << "h" << ltm->tm_min<< "p  den: "<<GioHoanThanh<< "h"<<PhutHoanThanh <<"p"<<endl<<endl;;
+	int GioHoanThanh = thoigianGio(ltm->tm_hour, ltm->tm_min, soPhutLamBai);
+	int PhutHoanThanh = thoigianPhut(ltm->tm_hour, ltm->tm_min, soPhutLamBai);
+	cout << "\t\t\t\tBan co " << soPhutLamBai << " phut lam bai thi tinh tu luc: " << ltm->tm_hour << "h" << ltm->tm_min << "p  den: " << GioHoanThanh << "h" << PhutHoanThanh << "p" << endl<< endl;
+	;
 	clockid_t t1, t2;
 	t1 = clock();
 	int diemmax = 10;
@@ -435,18 +441,26 @@ double ThiTracNghiem(List l2, List lichsu, double soPhutLamBai)
 		double time_use = (double)(t2 - t1) / CLOCKS_PER_SEC;
 		if (time_use / 60.0 > soPhutLamBai)
 		{
+			textcolor(4);
 			cout << "\t\t\t\t\tHet thoi gian lam bai " << endl;
 			cout << "\t\t\t\tDiem se duoc tinh tren nhung cau ban lam" << endl;
+			textcolor(15);
 			break;
 		}
+		textcolor(11);
 		cout << "\t\t\t\t" << p->data.stt << ": " << p->data.cauHoi << endl;
+		textcolor(15);
 		cout << "\t\t\t\t" << left << setw(30) << p->data.dapAnA << left << setw(30) << p->data.dapAnB << endl;
 		cout << "\t\t\t\t" << left << setw(30) << p->data.dapAnC << left << setw(30) << p->data.dapAnD << endl;
+		textcolor(9);
 		cout << "\t\t\t\tDap an: ";
+		textcolor(15);
 		cin >> dapan;
 		while (kiemtradapanchuan(dapan) == false)
 		{
+			textcolor(4);
 			cout << "\t\t\t\tNhap lai dap an: ";
+			textcolor(15);
 			cin >> dapan;
 		}
 		dapan = tolower(dapan);
@@ -579,7 +593,6 @@ string inputPassword(int maxLength)
 	return password;
 }
 
-
 bool questionyn()
 {
 	string luachon;
@@ -600,39 +613,47 @@ void Dangki_taikhoan(ListLogin &lg)
 	{
 		system("cls");
 		sleep(1);
-		cout << "\t DANG KI TAI KHOAN " << endl;
+		textcolor(9);
+		cout << "\n\n\n\n\n\t\t\t\t\t\t\t\t\t DANG KI TAI KHOAN " << endl;
+		textcolor(15);
 		cin.ignore();
-		cout << "Ho ten: ";
+		cout << "\t\t\t\t\t\t\t\tHo ten: ";
 		getline(cin, info.hoten);
-		cout << "Dia chi: ";
+		cout << "\t\t\t\t\t\t\t\tDia chi: ";
 		getline(cin, info.diachi);
-		cout << "Nam sinh: ";
+		cout << "\t\t\t\t\t\t\t\tNam sinh: ";
 		getline(cin, info.namsinh);
-		cout << "Tai khoan: ";
+		cout << "\t\t\t\t\t\t\t\tTai khoan: ";
 		getline(cin, info.taikhoan);
 		info.isAdmin = "0";
-		cout << "Mat khau: ";
+		cout << "\t\t\t\t\t\t\t\tMat khau: ";
 		getline(cin, info.matkhau);
-		cout << "Nhap lai mat khau: ";
+		cout << "\t\t\t\t\t\t\t\tNhap lai mat khau: ";
 		getline(cin, mk);
 		if (mk.compare(info.matkhau) == 0)
 		{
 			if (check_dangki_tk(lg, info) == 1)
 			{
-				cout << "Tai khoan dang ki thanh cong\n";
+				textcolor(6);
+				cout << "\t\t\t\t\t\t\t\tTai khoan dang ki thanh cong\n";
+				textcolor(15);
 				Luutk_vaofile(lg);
 				break;
 			}
 			else
 			{
-				cout << "Tai khoan da ton tai \n";
+				textcolor(4);
+				cout << "\t\t\t\t\t\t\t\tTai khoan da ton tai \n";
+				textcolor(15);
 				if (questionyn() == 0)
 					break;
 			}
 		}
 		else
 		{
-			cout << "Mat khau khong khop!!!" << endl;
+			textcolor(4);
+			cout << "\t\t\t\t\t\t\t\tMat khau khong khop!!!" << endl;
+			textcolor(15);
 			if (questionyn() == 0)
 				break;
 		}
@@ -652,19 +673,23 @@ NodeLogin *Dangnhap_tk(ListLogin lg, string tk, string mk)
 		{
 			if (p->info.matkhau == mk && p->info.taikhoan == tk && p->info.isAdmin == "0")
 			{
-				cout << "\t\t\t\tDang nhap thanh cong!" << endl;
+				cout << "\t\t\t\t\t\t\tDang nhap thanh cong!" << endl;
 				return p;
 			}
 			else
 			{
-				cout << "\t\t\t\tTai khoan hoac mat khau sai!" << endl;
-				if (questionyn()==0)
+				textcolor(4);
+				cout << "\t\t\t\t\t\t\tTai khoan hoac mat khau sai!" << endl;
+				textcolor(15);
+				if (questionyn() == 0)
 					return NULL;
 				else
 				{
-					cout << "Tai khoan: ";
+					system("cls");
+					cout<<"\t\t\t\t\t\t\t\tDANG NHAP"<<endl<<endl;
+					cout << "\t\t\t\t\t\t\tTai khoan: ";
 					cin >> tk;
-					cout << "Mat khau: ";
+					cout << "\t\t\t\t\t\t\tMat khau: ";
 					mk = inputPassword(256);
 				}
 			}
@@ -672,12 +697,14 @@ NodeLogin *Dangnhap_tk(ListLogin lg, string tk, string mk)
 	}
 	else
 	{
-		cout << "\t\t\t\tTai khoan chua dang ki!" << endl;
+		textcolor(4);
+		cout << "\t\t\t\t\t\t\tTai khoan chua dang ki!" << endl;
+		textcolor(15);
 		return NULL;
 	}
 }
 
-// in danh sach thong tin thi sinh 
+// in danh sach thong tin thi sinh
 void printListlogin(ListLogin l)
 {
 	NodeLogin *p = l.head;
@@ -691,6 +718,7 @@ void printListlogin(ListLogin l)
 	}
 }
 
+// tim kiem cau hoi theo tu khoa
 void search(List l, char cauhoi_tk[])
 {
 	Node *p = l.lHead;
@@ -802,44 +830,66 @@ void CapNhat_STT(List &l2)
 // Menu chuong trinh chinh
 void menu()
 {
-	cout << "\t\t\t\tCHUONG TRINH THI TRAC NGHIEM\t\t" << endl;
-	cout << "\t\t\t|----------------------------------------------|" << endl;
-	cout << "\t\t\t|   1: Dang nhap thi trac nghiem (thi sinh)    |" << endl;
-	cout << "\t\t\t|   2: Dang ki thi trac nghiem (thi sinh)      |" << endl;
-	cout << "\t\t\t|   3: Admin (Thay/co)                         |" << endl;
-	cout << "\t\t\t|   4: Thoat khoi chuong trinh                 |" << endl;
-	cout << "\t\t\t|----------------------------------------------|" << endl;
+	textcolor(9);
+	cout << "\n\n\n\n\n\t\t\t\t\t\t\t\tCHUONG TRINH THI TRAC NGHIEM\t\t" << endl;
+	textcolor(11);
+	cout << "\t\t\t\t\t\t\t|----------------------------------------------|" << endl;
+	cout << "\t\t\t\t\t\t\t|   1: Dang nhap thi trac nghiem (thi sinh)    |" << endl;
+	cout << "\t\t\t\t\t\t\t|   2: Dang ki thi trac nghiem (thi sinh)      |" << endl;
+	cout << "\t\t\t\t\t\t\t|   3: Admin (Thay/co)                         |" << endl;
+	cout << "\t\t\t\t\t\t\t|   4: Thoat khoi chuong trinh                 |" << endl;
+	cout << "\t\t\t\t\t\t\t|----------------------------------------------|" << endl;
+	textcolor(15);
 }
 
-// Menu sau khi thi trac nghiem xong 
+// Menu sau khi thi trac nghiem xong
 void menu_thitracnghiem()
 {
-	cout << "\t\t\t\t\tCHUONG TRINH THI TRAC NGHIEM" << endl;
-	cout << "\t\t\t\t|------------------------------|" << endl;
-	cout << "\t\t\t\t|   1: Xem diem thi            |" << endl;
-	cout << "\t\t\t\t|   2: Xem dap an trac nghiem  |" << endl;
-	cout << "\t\t\t\t|   3: Thoat                   |" << endl;
-	cout << "\t\t\t\t|------------------------------|" << endl;
+	textcolor(9);
+	cout << "\n\n\n\n\n\t\t\t\t\t\t\t\tCHUONG TRINH THI TRAC NGHIEM" << endl;
+	textcolor(11);
+	cout << "\t\t\t\t\t\t\t|------------------------------|" << endl;
+	cout << "\t\t\t\t\t\t\t|   1: Xem diem thi            |" << endl;
+	cout << "\t\t\t\t\t\t\t|   2: Xem dap an trac nghiem  |" << endl;
+	cout << "\t\t\t\t\t\t\t|   3: Thoat                   |" << endl;
+	cout << "\t\t\t\t\t\t\t|------------------------------|" << endl;
+	textcolor(15);
 }
 
 // Menu quan tri vien
 void menu_admin()
 {
-	cout << "\t\t\t\tCHUONG TRINH THI TRAC NGHIEM\t\t" << endl;
-	cout << "\t\t\t|-------------------------------------------------------|" << endl;
-	cout << "\t\t\t|   1: Xuat tat ca cau hoi                              |" << endl;
-	cout << "\t\t\t|   2: Tim kiem cau hoi                                 |" << endl;
-	cout << "\t\t\t|   3: Cap nhat cau hoi                                 |" << endl;
-	cout << "\t\t\t|   4: Them cau hoi                                     |" << endl;
-	cout << "\t\t\t|   5: Xoa cau hoi                                      |" << endl;
-	cout << "\t\t\t|   6: Cap nhat so luong cau hoi thi trac nghiem        |" << endl;
-	cout << "\t\t\t|   7: Cap nhat thoi gian thi trac nghiem               |" << endl;
-	cout << "\t\t\t|   8: Thoat va luu lai file                            |" << endl;
-	cout << "\t\t\t|   9: Quay lai man hinh chinh                          |" << endl;
-	cout << "\t\t\t|-------------------------------------------------------|" << endl;
+	textcolor(9);
+	cout << "\n\n\n\n\n\t\t\t\t\t\t\t\tCHUONG TRINH THI TRAC NGHIEM\t\t" << endl;
+	textcolor(11);
+	cout << "\t\t\t\t\t\t\t|-------------------------------------------------------|" << endl;
+	cout << "\t\t\t\t\t\t\t|   1: Xuat tat ca cau hoi                              |" << endl;
+	cout << "\t\t\t\t\t\t\t|   2: Tim kiem cau hoi                                 |" << endl;
+	cout << "\t\t\t\t\t\t\t|   3: Cap nhat cau hoi                                 |" << endl;
+	cout << "\t\t\t\t\t\t\t|   4: Them cau hoi                                     |" << endl;
+	cout << "\t\t\t\t\t\t\t|   5: Xoa cau hoi                                      |" << endl;
+	cout << "\t\t\t\t\t\t\t|   6: Cap nhat so luong cau hoi thi trac nghiem        |" << endl;
+	cout << "\t\t\t\t\t\t\t|   7: Cap nhat thoi gian thi trac nghiem               |" << endl;
+	cout << "\t\t\t\t\t\t\t|   8: Thoat va luu lai file                            |" << endl;
+	cout << "\t\t\t\t\t\t\t|   9: Quay lai man hinh chinh                          |" << endl;
+	cout << "\t\t\t\t\t\t\t|-------------------------------------------------------|" << endl;
+	textcolor(15);
 }
 
-// copy list Lichsu giong list l2 
+void gioiThieuDeTai()
+{
+	textcolor(12);
+	cout << "\n\n\n\n\n\n\n\t\t\t\t\t\t\tDE TAI: CHUONG TRINH THI TRAC NGHIEM\n\n"<< endl;
+	textcolor(6);
+	cout << "\t\t\t\t\t\t\t\tNguyen Dinh Thanh\n"<< endl;
+	cout << "\t\t\t\t\t\t\t\tNguyen Van Hieu\n"<< endl;
+	cout << "\t\t\t\t\t\t\t\tNguyen Thi Hoai Thuong\n"<< endl;
+	cout << "\t\t\t\t\t\t\t\tTruong Van Thong\n"<< endl;
+	cout << "\t\t\t\t\t\t\t\tNguyen Van The Hoang\n"<< endl;
+	textcolor(15);
+}
+
+// copy list Lichsu giong list l2
 void copycauhoi(List l2, List &lichsu)
 {
 	Node *p = l2.lHead;
@@ -857,10 +907,18 @@ void dapantracnghiem(List l2, List lichsu)
 	Node *ls = lichsu.lHead;
 	while (p && ls)
 	{
-		cout <<"\t\t\t\t"<<p->data.stt << ": " << p->data.cauHoi << endl;
-		cout <<"\t\t\t\t"<<left << setw(30) << p->data.dapAnA << left << setw(30) << p->data.dapAnB << endl;
-		cout <<"\t\t\t\t"<< left << setw(30) << p->data.dapAnC << left << setw(30) << p->data.dapAnD << endl;
-		cout <<"\t\t\t\tDap an cua giao vien: " << p->data.ketQua << "\t\tDap an cua ban: " << ls->data.ketQua << endl;
+		textcolor(6);
+		cout << "\t\t\t\t\t" << p->data.stt << ": " << p->data.cauHoi << endl;
+		textcolor(15);
+		cout << "\t\t\t\t\t" << left << setw(30) << p->data.dapAnA << left << setw(30) << p->data.dapAnB << endl;
+		cout << "\t\t\t\t\t" << left << setw(30) << p->data.dapAnC << left << setw(30) << p->data.dapAnD << endl;
+		cout << "\t\t\t\t\tDap an cua giao vien: ";
+		textcolor(2);
+		cout << p->data.ketQua ;
+		textcolor(15);
+		cout<< "\t\tDap an cua ban: ";
+		textcolor(1);
+		cout << ls->data.ketQua << endl;
 		ls = ls->pNext;
 		p = p->pNext;
 		cout << endl;
@@ -899,49 +957,52 @@ void dangnhapkiemtraTN(List l, List l2, ListLogin lg, int cauhoi, List lichsu, i
 	string tk, mk;
 	double diem;
 	int lctn;
-	cout << "\t\t\t\t\tDANG NHAP" << endl;
-	cout << "\t\t\t\tTai khoan: ";
+	cout << "\t\t\t\t\t\t\t\tDANG NHAP" << endl<<endl;
+	cout << "\t\t\t\t\t\t\tTai khoan: ";
 	cin >> tk;
-	cout << "\t\t\t\tMat khau: ";
+	cout << "\t\t\t\t\t\t\tMat khau: ";
 	mk = inputPassword(256);
 	NodeLogin *dn = Dangnhap_tk(lg, tk, mk);
 	if (dn != NULL)
 	{
 		sleep(1);
 		system("cls");
+		textcolor(48);
 		cout << "\t\t\t\t\tBAT DAU LAM BAI THI" << endl;
 		Enter();
 		createRandomList(l, l2, cauhoi);
 		CapNhat_STT(l2);
 		copycauhoi(l2, lichsu);
 		diem = ThiTracNghiem(l2, lichsu, soPhutLamBai);
+		textcolor(6);
 		cout << "\t\t\t\t\tKET THUC BAI THI" << endl;
+		textcolor(15);
 		lichsuthicuathisinh(l2, lichsu, dn->info.hoten, dn->info.namsinh, diem);
 		Enter();
 		while (true)
 		{
 			system("cls");
 			menu_thitracnghiem();
-			cout << "Lua chon cua ban: ";
-			lctn=Selection(1,3);
+			lctn = Selection(1, 3);
 			switch (lctn)
 			{
 			case 1:
 			{
-				cout << "Diem thi cua ban: " << diem << "/10 diem" << endl;
+				cout << "\t\t\t\t\tDiem thi cua ban: " << diem << "/10 diem" << endl;
 				Enter();
 				break;
 			}
 			case 2:
 			{
-				cout << "\tDAP AN CHI TIET" << endl;
+				textcolor(4);
+				cout << "\t\t\t\t\tDAP AN CHI TIET" << endl;
 				dapantracnghiem(l2, lichsu);
 				Enter();
 				break;
 			}
 			case 3:
 			{
-				cout << "\t\tHOAN THANH BAI THI" << endl;
+				cout << "\t\t\t\t\t\tHOAN THANH BAI THI" << endl;
 				exit(0);
 			}
 			}
@@ -963,7 +1024,11 @@ void xuatCauHoiTheoSTT(List l, int stt)
 		cout << "Tim Kiem Thanh Cong!";
 	}
 	else
+	{
+		textcolor(4);
 		cout << "\nTim Kiem That Bai!";
+		textcolor(15);
+	}
 }
 
 void thucThiTimKiem(List l)
@@ -973,32 +1038,31 @@ void thucThiTimKiem(List l)
 	cout << "\t\t\t\t1.So Thu Tu\n";
 	cout << "\t\t\t\t2.Tu Khoa\n";
 	cout << "\t\t\t\tNhap Phuong Thuc Tim: ";
-	select=Selection(1,2);
+	select = Selection(1, 2);
 	cin.ignore();
-	switch(select)
+	switch (select)
 	{
-		case 1:
-		{
-			int stt;
-			cout << "Nhap So Thu Tu :";
-			cin >> stt;
-			cin.ignore();
-			xuatCauHoiTheoSTT(l, stt);
-			cout << "\n\n";
-			break;
-		}
-		case 2:
-		{
-			char a[255];
-			cout << "Nhap Tu Khoa Muon Tim: ";
-			cin.getline(a, 255);
-			search(l, a);
-			cout << "\n\n";
-			break;
-		}
+	case 1:
+	{
+		int stt;
+		cout << "Nhap So Thu Tu :";
+		cin >> stt;
+		cin.ignore();
+		xuatCauHoiTheoSTT(l, stt);
+		cout << "\n\n";
+		break;
+	}
+	case 2:
+	{
+		char a[255];
+		cout << "Nhap Tu Khoa Muon Tim: ";
+		cin.getline(a, 255);
+		search(l, a);
+		cout << "\n\n";
+		break;
+	}
 	}
 }
-
 
 TRACNGHIEM nhapCapNhat(TRACNGHIEM &data)
 {
@@ -1028,53 +1092,61 @@ void thucThiCapNhat(List &l)
 	cout << "\t\t\t\t1.So Thu Tu\n";
 	cout << "\t\t\t\t2.Tu Khoa\n";
 	cout << "\t\t\t\tNhap Phuong Thuc Cap Nhat: \n";
-	select=Selection(1,2);
+	select = Selection(1, 2);
 	cin.ignore();
 	switch (select)
 	{
-		case 1:
+	case 1:
+	{
+		int stt;
+		cout << "Nhap So Thu Tu :";
+		cin >> stt;
+		cin.ignore();
+		xuatCauHoiTheoSTT(l, stt);
+		if (searchSTT(l, stt) == 1)
 		{
-			int stt;
-			cout << "Nhap So Thu Tu :";
-			cin >> stt;
-			cin.ignore();
-			xuatCauHoiTheoSTT(l, stt);
-			if (searchSTT(l, stt) == 1)
+			cout << "\n\tBat Dau Cap Nhat!\n";
+			tn = nhapCapNhat(tn);
+			capNhatTheoSTT(l, stt, tn);
+			if (capNhatTheoSTT(l, stt, tn) == true)
+				cout << "\nCap Nhat Thanh Cong!";
+			else
 			{
-				cout << "\n\tBat Dau Cap Nhat!\n";
-				tn = nhapCapNhat(tn);
-				capNhatTheoSTT(l, stt, tn);
-				if (capNhatTheoSTT(l, stt, tn) == true)
-					cout << "\nCap Nhat Thanh Cong!";
-				else
-					cout << "\nCap Nhat That Bai!";
-				cout << "\n\n";
+				textcolor(4);
+				cout << "\nCap Nhat That Bai!";
+				textcolor(15);
 			}
-			break;
+			cout << "\n\n";
 		}
-		case 2:
+		break;
+	}
+	case 2:
+	{
+		int stt;
+		char a[255];
+		cout << "Nhap Tu Khoa Muon Tim: ";
+		cin.getline(a, 255);
+		search(l, a);
+		cout << "Nhap So Thu Tu: ";
+		cin >> stt;
+		cin.ignore();
+		if (searchSTT(l, stt) == 1)
 		{
-			int stt;
-			char a[255];
-			cout << "Nhap Tu Khoa Muon Tim: ";
-			cin.getline(a, 255);
-			search(l, a);
-			cout << "Nhap So Thu Tu: ";
-			cin >> stt;
-			cin.ignore();
-			if (searchSTT(l, stt) == 1)
+			cout << "\n\tBat Dau Cap Nhat!\n";
+			tn = nhapCapNhat(tn);
+			capNhatTheoSTT(l, stt, tn);
+			if (capNhatTheoSTT(l, stt, tn) == true)
+				cout << "\nCap Nhat Thanh Cong";
+			else
 			{
-				cout << "\n\tBat Dau Cap Nhat!\n";
-				tn = nhapCapNhat(tn);
-				capNhatTheoSTT(l, stt, tn);
-				if (capNhatTheoSTT(l, stt, tn) == true)
-					cout << "\nCap Nhat Thanh Cong";
-				else
-					cout << "\nCap Nhat That Bai";
-				cout << "\n\n";
+				textcolor(4);
+				cout << "\nCap Nhat That Bai";
+				textcolor(15);
 			}
-			break;
+			cout << "\n\n";
 		}
+		break;
+	}
 	}
 }
 
@@ -1084,47 +1156,55 @@ void thucThiXoa(List &l)
 	cout << "\t\t\t\tBan Muon Tim Xoa Theo: \n";
 	cout << "\t\t\t\t1.So Thu Tu\n";
 	cout << "\t\t\t\t2.Tu Khoa\n";
-	select =Selection(1,2);
+	select = Selection(1, 2);
 	cin.ignore();
 	switch (select)
 	{
-		case 1:
+	case 1:
+	{
+		int stt;
+		cout << "Nhap So Thu Tu :";
+		cin >> stt;
+		cin.ignore();
+		xuatCauHoiTheoSTT(l, stt);
+		if (xoaTheoSTT(l, stt) == true)
 		{
-			int stt;
-			cout << "Nhap So Thu Tu :";
-			cin >> stt;
-			cin.ignore();
-			xuatCauHoiTheoSTT(l, stt);
-			if (xoaTheoSTT(l, stt) == true)
-			{
-				cout << "Xoa Thanh Cong!";
-				CapNhat_STT(l);
-			}
-			else
-				cout << "Xoa That Bai!";
-			cout << "\n\n";
-			break;
+			cout << "Xoa Thanh Cong!";
+			CapNhat_STT(l);
 		}
-		case 2: 
+		else
 		{
-			int stt;
-			char a[255];
-			cout << "Nhap Tu Khoa Muon Tim: ";
-			cin.getline(a, 255);
-			search(l, a);
-			cout << "\nNhap So Thu Tu: ";
-			cin >> stt;
-			cin.ignore();
-			if (xoaTheoSTT(l, stt) == true)
-			{
-				cout << "Xoa Thanh Cong!";
-				CapNhat_STT(l);
-			}
-			else
-				cout << "Xoa That Bai!";
-			cout << "\n\n";
-			break;
+			textcolor(4);
+			cout << "Xoa That Bai!";
+			textcolor(15);
 		}
+		cout << "\n\n";
+		break;
+	}
+	case 2:
+	{
+		int stt;
+		char a[255];
+		cout << "Nhap Tu Khoa Muon Tim: ";
+		cin.getline(a, 255);
+		search(l, a);
+		cout << "\nNhap So Thu Tu: ";
+		cin >> stt;
+		cin.ignore();
+		if (xoaTheoSTT(l, stt) == true)
+		{
+			cout << "Xoa Thanh Cong!";
+			CapNhat_STT(l);
+		}
+		else
+		{
+			textcolor(4);
+			cout << "Xoa That Bai!";
+			textcolor(15);
+		}
+		cout << "\n\n";
+		break;
+	}
 	}
 }
 
@@ -1134,7 +1214,9 @@ void luuFile(List l)
 	ofstream ghiFile("cauhoi.txt");
 	if (ghiFile.bad())
 	{
+		textcolor(4);
 		cout << "Khong the mo file de ghi!";
+		textcolor(15);
 		return;
 	}
 	Node *p = l.lHead;
@@ -1162,21 +1244,25 @@ int checkAdmin(ListLogin lg, string tk, string mk)
 void quyenadmin(ListLogin lg, List l, int &cauhoi, int &sophutlambai)
 {
 	string tk, mk;
-	cout << "\t\t\t\tDANG NHAP VOI QUYEN QUAN TRI VIEN" << endl;
-	cout << "\t\t\tTai khoan: ";
+	textcolor(9);
+	cout << "\n\n\n\t\t\t\t\t\t\tDANG NHAP VOI QUYEN QUAN TRI VIEN" << endl;
+	textcolor(15);
+	cout << "\t\t\t\t\t\tTai khoan: ";
 	cin >> tk;
-	cout << "\t\t\tMat khau: ";
+	cout << "\t\t\t\t\t\tMat khau: ";
 	mk = inputPassword(256);
 	if (checkAdmin(lg, tk, mk) == 1)
 	{
-		cout << "\t\t\t\t\tDang nhap thanh cong" << endl;
+		textcolor(9);
+		cout << "\t\t\t\t\t\t\tDang nhap thanh cong!" << endl;
+		textcolor(15);
 		Enter();
 		int chon;
 		do
 		{
 			system("cls");
 			menu_admin();
-			chon=Selection(1,9);
+			chon = Selection(1, 9);
 			cin.ignore();
 			switch (chon)
 			{
@@ -1212,7 +1298,7 @@ void quyenadmin(ListLogin lg, List l, int &cauhoi, int &sophutlambai)
 				Enter();
 				break;
 			case 8:
-				cout<<"\t\t\t\tLUU THANH CONG";
+				cout << "\t\t\t\tLUU THANH CONG";
 				sleep(1);
 				luuFile(l);
 				exit(0);
@@ -1221,12 +1307,52 @@ void quyenadmin(ListLogin lg, List l, int &cauhoi, int &sophutlambai)
 	}
 	else
 	{
+		textcolor(4);
 		cout << "Dang nhap that bai" << endl;
+		textcolor(15);
 	}
 }
 
+// Doc File Chu
+void DocFileCauTrucDuLieu(char *tenfile)
+{
+	string s;
+	int dem = 0;
+	system("cls");
+	char *a = "		";
+	ifstream fin(tenfile);
+	cout << " " << endl;
+	cout << " " << endl;
+	cout << " " << endl;
+	cout << " " << endl;
+	cout << " " << endl;
+	while (getline(fin, s))
+	{
+		dem++;
+		if (dem <= 5)
+		{
+			textcolor(3);
+		}
+		else if (dem >= 14 && dem < 18)
+		{
+			textcolor(3);
+		}
+		else if (dem >= 18)
+		{
+			textcolor(3);
+		}
+		else if (dem > 2 && dem < 14)
+		{
+			textcolor(3);
+		}
+		cout << a;
+		cout << s << endl;
+	}
+	fin.close();
+}
 int main()
 {
+	SetWindowSize(120,30);
 	List l, l2, lichsu;
 	INIT(l);
 	INIT(l2);
@@ -1240,10 +1366,20 @@ int main()
 	int sophutlambai = 15;
 	int luachon;
 	system("cls");
+	resizeConsole(1200, 700);
+	DocFileCauTrucDuLieu("bia.txt");
+	Sleep(2000);
+	system("cls");
+	gioiThieuDeTai();
+	Sleep(2000);
+	SetBGColor(0);
+	manHinhLoading();
+	SetBGColor(0);
+	system("cls");
 	while (true)
 	{
 		menu();
-		luachon=Selection(1,4);
+		luachon = Selection(1, 4);
 		sleep(1);
 		system("cls");
 		switch (luachon)
@@ -1265,8 +1401,10 @@ int main()
 			break;
 		}
 		case 4:
-			cout<<"\t\t\t\tCAM ON DA SU DUNG CHUONG TRINH"<<endl;
+			textcolor(6);
+			cout << "\n\n\n\n\n\n\n\t\t\t\t\t\t\t(*^_^*) CAM ON DA SU DUNG CHUONG TRINH (*^_^*)" << endl;
 			sleep(1);
+			textcolor(0);
 			exit(0);
 		}
 	}

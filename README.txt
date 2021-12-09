@@ -16,5 +16,6 @@ Chức năng của chương trình: Chương trình thi trắc nghiệm tin họ
 
 Chức năng của các file khác:
 -	cauhoi.txt : lưu trữ toàn bộ câu hỏi và đáp án
+-	bia.txt : lưu trữ chữ "CAU TRUC DU LIEU & GIAI THUAT" 
 -	lichsuthi.txt : lưu trữ thông tin mỗi lần thi của thí sinh gồm : họ tên, năm sinh, điểm, câu hỏi thi, đáp án đúng và đáp án của thí sinh.
 -	tk.csv : lưu trữ Tài khoản Mật khẩu, họ tên, quê quán, năm sinh của user và của admin xác nhận admin của người đăng nhập.

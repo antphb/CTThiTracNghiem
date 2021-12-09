@@ -402,3 +402,207 @@ Dap an TS: a
 Dap an dung: b
 Dap an TS: a
 ---------------------------------------------------
+Ho Ten: Nguyen Dinh Thanh
+Nam sinh: 2001
+Diem thi: 2/10 
+1:Phim Tat De Sao Chep Doi Tuong Vao ClipBoard La Gi?
+Dap an dung: b
+Dap an TS: a
+2:Trong PowerPoint In An Ta Su Dung Chuc Nang
+Dap an dung: d
+Dap an TS: a
+3:Phan Mem Nao Sau Day Khong Phai La Trinh Duyet Web?
+Dap an dung: d
+Dap an TS: a
+4:Trong Word,Tao Chu Roi Cho Van Ban Ta Chon
+Dap an dung: c
+Dap an TS: a
+5:Dich Vu Luu Tru Dam May Cua Microsoft La Gi ?
+Dap an dung: c
+Dap an TS: a
+6:Trong Excel , Khi Viet Sai Ham , MAy Bao Loi
+Dap an dung: a
+Dap an TS: a
+7:Trong WinWord , Noi Dung Cua Footer Se
+Dap an dung: b
+Dap an TS: a
+8:Trong Word ,Muon In Dam Noi Dung , Ta Dung To Hop
+Dap an dung: a
+Dap an TS: a
+9:De May tinh Lam Viec , He Dieu Hanh Duoc Cai Dat O Dau ?
+Dap an dung: b
+Dap an TS: a
+10:De Chon Mot Doan Van Ban Ta Thuc Hien:
+Dap an dung: c
+Dap an TS: a
+---------------------------------------------------
+Ho Ten: Nguyen Dinh Thanh
+Nam sinh: 2001
+Diem thi: 5/10 
+1:Trong Excel,De Luu Tap Tin Dang Mo duoi Ten Khac Ta Chon?
+Dap an dung: a
+Dap an TS: a
+2:Phan Mem Nao Sau Day Khong Phai La Trinh Duyet Web?
+Dap an dung: d
+Dap an TS: a
+3:Trong Word,Dinh Dang Duong Khung Cho 1 Doan Van Ban Ta Chon
+Dap an dung: d
+Dap an TS: a
+4:He Thong Nho Cua May Tinh Bao Gom
+Dap an dung: a
+Dap an TS: a
+5:De Tao Hieu Ung trong Slide , Ta Dung
+Dap an dung: a
+Dap an TS: a
+6:Chuc Nang Bookmark Trong Trinh Duyet Web Dung De
+Dap an dung: b
+Dap an TS: a
+7:De Dong Nhanh 1 Cua So Ta Dung to Hop Phim
+Dap an dung: d
+Dap an TS: a
+8:Bo Xu Ly Trung Tam Cua May tinh La
+Dap an dung: a
+Dap an TS: a
+9:Chon Phat Bieu Dung
+Dap an dung: a
+Dap an TS: a
+10:Trong Excel, Ham Today() Tra Ve:
+Dap an dung: c
+Dap an TS: a
+---------------------------------------------------
+Ho Ten: Nguyen Dinh Thanh
+Nam sinh: 2001
+Diem thi: 2/10 
+1:Trong PowerPoint Muon Danh So Trang Cho Tung Slide Ta Dung
+Dap an dung: b
+Dap an TS: a
+2:Trong PowerPoint In An Ta Su Dung Chuc Nang
+Dap an dung: d
+Dap an TS: a
+3:Dich Vu Luu Tru Dam May Cua Microsoft La Gi?
+Dap an dung: c
+Dap an TS: a
+4:Du Lieu Trong 1 CSDL Duoc Luu Trong
+Dap an dung: a
+Dap an TS: a
+5:De Them 1 Slide Trong Powerpoint , Ta Chon
+Dap an dung: c
+Dap an TS: a
+6:Tinh Gia Tri Cua Lenh =LEN("TIN HOC")
+Dap an dung: c
+Dap an TS: a
+7:De Dong Nhanh 1 Cua So Ta Dung to Hop Phim
+Dap an dung: d
+Dap an TS: a
+8:Trong Cac Phan Mem Sau , PHan Mem Nao La Phan Mem Ung Dung
+Dap an dung: b
+Dap an TS: a
+9:Muon Lam Cho Cua So Nho Hon,Su Dung Nut Nao?
+Dap an dung: c
+Dap an TS: a
+10:Trong Word,Muon Danh Dau Lua Chon Mot Tu Ta Chon?
+Dap an dung: a
+Dap an TS: a
+---------------------------------------------------
+Ho Ten: Nguyen Dinh Thanh
+Nam sinh: 2001
+Diem thi: 2/10 
+1:Trong Word,Bieu Tuong Cay Choi Co Chuc Nang Gi?
+Dap an dung: c
+Dap an TS: a
+2:Trong Word,Tao Chu Roi Cho Van Ban Ta Chon
+Dap an dung: c
+Dap an TS: a
+3:Viec Tai Du Lieu Tu Internet Cham La Do
+Dap an dung: c
+Dap an TS: a
+4:Phan Mo Rong Cua Word 2010 La Gi ?
+Dap an dung: b
+Dap an TS: a
+5:trong Excel, Lenh =MAX(12,3,9,15,8) Cho Ket Qua
+Dap an dung: b
+Dap an TS: a
+6:Trong Excel , Khi Viet Sai Ham , MAy Bao Loi
+Dap an dung: a
+Dap an TS: a
+7:De Ve Do Thi Trong Slide, Ta Chon
+Dap an dung: b
+Dap an TS: a
+8:Chuc Nang Bookmark Trong Trinh Duyet Web Dung De
+Dap an dung: b
+Dap an TS: a
+9:Trong Powerpoint Co Nhung Dang Hien Thi Nao ?
+Dap an dung: d
+Dap an TS: a
+10:Bo Xu Ly Trung Tam Cua May tinh La
+Dap an dung: a
+Dap an TS: a
+---------------------------------------------------
+Ho Ten: Nguyen Dinh Thanh
+Nam sinh: 2001
+Diem thi: 2/10 
+1:Bo Nho Ram Va Rom La Bo Nho Gi?
+Dap an dung: a
+Dap an TS: a
+2:Trong Excel, Ham Today() Tra Ve:
+Dap an dung: c
+Dap an TS: a
+3:Bieu Thuc Sau=AND(5>4,6<9,2<1,10>7,OR(2<1,3>2)
+Dap an dung: b
+Dap an TS: a
+4:Trong PowerPoint De Ve Bieu Do Ta Chon?
+Dap an dung: b
+Dap an TS: a
+5:Trong Window , Muon Tim Kiem Tep Hay Thu Muc , Ta Thuc Hien
+Dap an dung: c
+Dap an TS: a
+6:Phan Mo Rong Cua Word 2010 La Gi ?
+Dap an dung: b
+Dap an TS: a
+7:De Truy Cap Internet, Ta Dung
+Dap an dung: c
+Dap an TS: a
+8:Trong WinWord , Noi Dung Cua Header Se
+Dap an dung: a
+Dap an TS: a
+9:De May tinh Lam Viec , He Dieu Hanh Duoc Cai Dat O Dau ?
+Dap an dung: b
+Dap an TS: a
+10:Cong Dung Cua To Hop Phim Ctrl-S La Gi?
+Dap an dung: d
+Dap an TS: a
+---------------------------------------------------
+Ho Ten: Nguyen Dinh Thanh
+Nam sinh: 2001
+Diem thi: 4/10 
+1:Muon Lam Cho Cua So Nho Hon,Su Dung Nut Nao?
+Dap an dung: c
+Dap an TS: a
+2:Gia Tri Cua =LEN(TRUNG TAM TIN HOC)Trong Excel La:
+Dap an dung: c
+Dap an TS: a
+3:Tai 1 Sile Trong PowerPoint Ta Dung To Hop Phim Nao De Xoa
+Dap an dung: c
+Dap an TS: a
+4:trong Mang May Tinh ,Thuat Ngu Share Co Y Nghia Gi ?
+Dap an dung: a
+Dap an TS: a
+5:He Thong Nho Cua May Tinh Bao Gom
+Dap an dung: a
+Dap an TS: a
+6:Phan Mem Nao La Phan Mem Ung Dung ?
+Dap an dung: d
+Dap an TS: a
+7:Chuc Nang Cua Disk Defragment La
+Dap an dung: a
+Dap an TS: a
+8:Lua Chon Nao Khong Phai La Kieu Cua Powerpoint ?
+Dap an dung: b
+Dap an TS: a
+9:Trong Word,Muon Danh Dau Lua Chon Mot Tu Ta Chon?
+Dap an dung: a
+Dap an TS: a
+10:Trong Excel,Cac Dang Dia Chi Sau Day, Dia Chi Nao La Tuyet Doi
+Dap an dung: d
+Dap an TS: a
+---------------------------------------------------
