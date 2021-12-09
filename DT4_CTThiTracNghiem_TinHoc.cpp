@@ -385,13 +385,41 @@ bool kiemtradapanchuan(char x)
 	return false;
 }
 
+int thoigianGio(int hour, int min, double soPhutLamBai )
+{
+	if((min + soPhutLamBai) > 60)
+	{
+		hour= hour +1;
+	}
+	else
+	{
+		hour=hour;
+	}
+	return hour;
+}
+
+int thoigianPhut(int hour, int min, double soPhutLamBai )
+{
+	if((min + soPhutLamBai) > 60)
+	{
+		min=soPhutLamBai - (60 -min);
+	}
+	else
+	{
+		min=min+soPhutLamBai;
+	}
+	return min;
+}
+
 // ham thi trac nghiem tinh thoi gian lam bai tu: ... den: 
 // Neu ko hoan thanh kip bai thi theo thoi gian da chi dinh thi chuong trinh tu dong dung va tinh diem cac cau da lam 
 double ThiTracNghiem(List l2, List lichsu, double soPhutLamBai)
 {
 	time_t now = time(0);
 	tm *ltm = localtime(&now);
-	cout << "\t\t\t\tBan co " << soPhutLamBai << " phut lam bai thi tinh tu luc: " << ltm->tm_hour << ":" << ltm->tm_min << ":" << ltm->tm_sec << endl;
+	int GioHoanThanh=thoigianGio(ltm->tm_hour,ltm->tm_min,soPhutLamBai);
+	int PhutHoanThanh= thoigianPhut(ltm->tm_hour,ltm->tm_min,soPhutLamBai);
+	cout << "\t\t\t\tBan co " << soPhutLamBai << " phut lam bai thi tinh tu luc: " << ltm->tm_hour << "h" << ltm->tm_min<< "p  den: "<<GioHoanThanh<< "h"<<PhutHoanThanh <<"p"<<endl<<endl;;
 	clockid_t t1, t2;
 	t1 = clock();
 	int diemmax = 10;
@@ -829,10 +857,10 @@ void dapantracnghiem(List l2, List lichsu)
 	Node *ls = lichsu.lHead;
 	while (p && ls)
 	{
-		cout << p->data.stt << ": " << p->data.cauHoi << endl;
-		cout << left << setw(30) << p->data.dapAnA << left << setw(30) << p->data.dapAnB << endl;
-		cout << left << setw(30) << p->data.dapAnC << left << setw(30) << p->data.dapAnD << endl;
-		cout << "Dap an cua giao vien: " << p->data.ketQua << "\t\tDap an cua ban: " << ls->data.ketQua << endl;
+		cout <<"\t\t\t\t"<<p->data.stt << ": " << p->data.cauHoi << endl;
+		cout <<"\t\t\t\t"<<left << setw(30) << p->data.dapAnA << left << setw(30) << p->data.dapAnB << endl;
+		cout <<"\t\t\t\t"<< left << setw(30) << p->data.dapAnC << left << setw(30) << p->data.dapAnD << endl;
+		cout <<"\t\t\t\tDap an cua giao vien: " << p->data.ketQua << "\t\tDap an cua ban: " << ls->data.ketQua << endl;
 		ls = ls->pNext;
 		p = p->pNext;
 		cout << endl;
@@ -881,13 +909,13 @@ void dangnhapkiemtraTN(List l, List l2, ListLogin lg, int cauhoi, List lichsu, i
 	{
 		sleep(1);
 		system("cls");
-		cout << "\t\t\t\tBAT DAU LAM BAI THI" << endl;
+		cout << "\t\t\t\t\tBAT DAU LAM BAI THI" << endl;
 		Enter();
 		createRandomList(l, l2, cauhoi);
 		CapNhat_STT(l2);
 		copycauhoi(l2, lichsu);
 		diem = ThiTracNghiem(l2, lichsu, soPhutLamBai);
-		cout << "\t\t\t\tKET THUC BAI THI" << endl;
+		cout << "\t\t\t\t\tKET THUC BAI THI" << endl;
 		lichsuthicuathisinh(l2, lichsu, dn->info.hoten, dn->info.namsinh, diem);
 		Enter();
 		while (true)
@@ -1237,7 +1265,7 @@ int main()
 			break;
 		}
 		case 4:
-			cout<<"\t\tCAM ON DA SU DUNG CHUONG TRINH"<<endl;
+			cout<<"\t\t\t\tCAM ON DA SU DUNG CHUONG TRINH"<<endl;
 			sleep(1);
 			exit(0);
 		}
