@@ -3,7 +3,7 @@ Tài khoản Admin:
 -	Tên tài khoản: admin
 -	Mật khẩu: admin
 
-
+Team có sử dụng github cho dự án này: 
 Link GitHub: https://github.com/antphb/CTThiTracNghiem.git
 
 
@@ -17,4 +17,4 @@ Chức năng của chương trình: Chương trình thi trắc nghiệm (danh s�
 Chức năng của các file khác:
 -	cauhoi.txt : lưu trữ toàn bộ câu hỏi và đáp án
 -	lichsuthi.txt : lưu trữ thông tin mỗi lần thi của thí sinh gồm : họ tên, năm sinh, điểm, câu hỏi thi, đáp án đúng và đáp án của thí sinh.
--	tk.csv : lưu trữ họ tên, quê quán, năm sinh, tài khoản, mật khẩu, xác nhận admin của người đăng nhập.
+-	tk.csv : lưu trữ Tài khoản Mật khẩu, họ tên, quê quán, năm sinh của user và của admin xác nhận admin của người đăng nhập.
