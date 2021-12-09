@@ -7,7 +7,7 @@ Team có sử dụng github cho dự án này:
 Link GitHub: https://github.com/antphb/CTThiTracNghiem.git
 
 
-Chức năng của chương trình: Chương trình thi trắc nghiệm (danh sách liên kết) 
+Chức năng của chương trình: Chương trình thi trắc nghiệm tin học (danh sách liên kết) 
 -	Đăng nhập/đăng kí.
 -	Đăng kí gồm các thông tin: họ tên, địa chỉ, năm sinh, tài khoản, mật khẩu.
 -	Quyền của Admin : xem/ tìm kiếm/ cập nhật/ thêm/ xoá câu hỏi, cập nhật số lượng câu hỏi, cập nhật thời gian thi, lưu file.
