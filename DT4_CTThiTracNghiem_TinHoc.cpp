@@ -540,7 +540,6 @@ int check_dangki_tk(ListLogin &l, login data)
 	{
 		return 0;
 	}
-	insertlogin(l, data);
 	return 1;
 }
 
@@ -614,7 +613,7 @@ void Dangki_taikhoan(ListLogin &lg)
 		system("cls");
 		sleep(1);
 		textcolor(9);
-		cout << "\n\n\n\n\n\t\t\t\t\t\t\t\t\t DANG KI TAI KHOAN " << endl;
+		cout << "\t\t\t\t\t\t\t\t DANG KI TAI KHOAN \n\n" << endl;
 		textcolor(15);
 		cin.ignore();
 		cout << "\t\t\t\t\t\t\t\tHo ten: ";
@@ -625,29 +624,27 @@ void Dangki_taikhoan(ListLogin &lg)
 		getline(cin, info.namsinh);
 		cout << "\t\t\t\t\t\t\t\tTai khoan: ";
 		getline(cin, info.taikhoan);
-		info.isAdmin = "0";
+		while (!(check_dangki_tk(lg, info) == 1))
+		{
+			textcolor(4);
+			cout << "\t\t\t\t\t\t\t\tTai khoan da ton tai \n";
+			textcolor(15);
+			cout << "\t\t\t\t\t\t\t\tTai khoan: ";
+			getline(cin, info.taikhoan);
+		}
 		cout << "\t\t\t\t\t\t\t\tMat khau: ";
-		getline(cin, info.matkhau);
+		getline(cin,info.matkhau);
 		cout << "\t\t\t\t\t\t\t\tNhap lai mat khau: ";
-		getline(cin, mk);
+		cin>>mk;
 		if (mk.compare(info.matkhau) == 0)
 		{
-			if (check_dangki_tk(lg, info) == 1)
-			{
-				textcolor(6);
-				cout << "\t\t\t\t\t\t\t\tTai khoan dang ki thanh cong\n";
-				textcolor(15);
-				Luutk_vaofile(lg);
-				break;
-			}
-			else
-			{
-				textcolor(4);
-				cout << "\t\t\t\t\t\t\t\tTai khoan da ton tai \n";
-				textcolor(15);
-				if (questionyn() == 0)
-					break;
-			}
+			textcolor(6);
+			cout << "\t\t\t\t\t\t\t\tTai khoan dang ki thanh cong\n";
+			info.isAdmin = "0";
+			textcolor(15);
+			insertlogin(lg,info);
+			Luutk_vaofile(lg);
+			break;
 		}
 		else
 		{
@@ -846,7 +843,7 @@ void menu()
 void menu_thitracnghiem()
 {
 	textcolor(9);
-	cout << "\n\n\n\n\n\t\t\t\t\t\t\t\tCHUONG TRINH THI TRAC NGHIEM" << endl;
+	cout << "\n\n\n\n\n\t\t\t\t\t\t\t   CHUONG TRINH THI TRAC NGHIEM" << endl;
 	textcolor(11);
 	cout << "\t\t\t\t\t\t\t|------------------------------|" << endl;
 	cout << "\t\t\t\t\t\t\t|   1: Xem diem thi            |" << endl;
@@ -988,6 +985,7 @@ void dangnhapkiemtraTN(List l, List l2, ListLogin lg, int cauhoi, List lichsu, i
 			{
 			case 1:
 			{
+				textcolor(12);
 				cout << "\t\t\t\t\tDiem thi cua ban: " << diem << "/10 diem" << endl;
 				Enter();
 				break;
@@ -995,14 +993,14 @@ void dangnhapkiemtraTN(List l, List l2, ListLogin lg, int cauhoi, List lichsu, i
 			case 2:
 			{
 				textcolor(4);
-				cout << "\t\t\t\t\tDAP AN CHI TIET" << endl;
+				cout << "\t\t\t\t\t\t\t\tDAP AN CHI TIET" << endl;
 				dapantracnghiem(l2, lichsu);
 				Enter();
 				break;
 			}
 			case 3:
 			{
-				cout << "\t\t\t\t\t\tHOAN THANH BAI THI" << endl;
+				cout << "\t\t\t\t\t\t\t\tHOAN THANH BAI THI" << endl;
 				exit(0);
 			}
 			}
