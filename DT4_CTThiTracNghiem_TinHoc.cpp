@@ -358,15 +358,13 @@ void createRandomList(List l, List &l2, int soLuongCauHoi)
 int Selection(int min, int max)
 {
 	char lc;
-	gotoxy(60,12);
-	cout <<"Lua chon: ";
+	cout <<"\t\t\t\t\t\t\tLua chon: ";
 	cin>>lc;
 	int lcs;
 	lcs=lc-'0';
 	while (!(lc >= '0' && lc <= '9') || (lcs < min || lcs > max))
 	{
-		gotoxy(60,12);
-		cout << "Nhap lai lua chon: ";
+		cout << "\t\t\t\t\t\t\tNhap lai lua chon: ";
 		cin >> lc;
 		lcs=lc-'0';
 	}
@@ -426,10 +424,10 @@ double ThiTracNghiem(List l2, List lichsu, double soPhutLamBai)
 	tm *ltm = localtime(&now);
 	int GioHoanThanh = thoigianGio(ltm->tm_hour, ltm->tm_min, soPhutLamBai);
 	int PhutHoanThanh = thoigianPhut(ltm->tm_hour, ltm->tm_min, soPhutLamBai);
-	gotoxy(57,5);
+	gotoxy(50,5);
 	textcolor(15);
-	cout << "Ban co " << soPhutLamBai << " phut lam bai thi tinh tu luc: " << ltm->tm_hour << "h" << ltm->tm_min << "p den: " << GioHoanThanh << "h" << PhutHoanThanh << "p" << endl<< endl;
-	;
+	cout << "Luu y: Ban co " << soPhutLamBai << " phut lam bai thi tinh tu luc: " << ltm->tm_hour << "h" << ltm->tm_min << "p den: " << GioHoanThanh << "h" << PhutHoanThanh << "p" << endl<< endl;
+	Enter();
 	clockid_t t1, t2;
 	t1 = clock();
 	int diemmax = 10;
@@ -453,6 +451,7 @@ double ThiTracNghiem(List l2, List lichsu, double soPhutLamBai)
 			textcolor(15);
 			break;
 		}
+		system("cls");
 		KhungCauHoi();
 		KhungTraLoiPhaiTren();
 		KhungTraLoiBenPhaiDuoi();
